@@ -38,6 +38,26 @@ public class StartWindowController implements Initializable {
         window.setScene(registrovanjeScene);
         window.show();
     }
+    @FXML
+    void searchButtonPushed(ActionEvent event) throws IOException {
+
+    }
+    @FXML
+    public void comboCategoryChanged() {
+
+    }
+    @FXML
+    public void comboSortChanged() {
+
+    }
+    @FXML
+    public void comboFilterChanged() {
+
+    }
+    @FXML
+    public void ShopCartClicked() {
+
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
