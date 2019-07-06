@@ -27,7 +27,17 @@ public class StartWindowController implements Initializable {
         window.show();
     }
 
+    @FXML
+    void signUpButtonPushed(ActionEvent event) throws IOException {
+        Parent registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/SignUpWindow.fxml"));
+        Scene registrovanjeScene = new Scene(registrovanjeParent);
 
+        //This line gets the Stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+        window.setScene(registrovanjeScene);
+        window.show();
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
