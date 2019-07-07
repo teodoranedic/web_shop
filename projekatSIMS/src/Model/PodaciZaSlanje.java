@@ -1,15 +1,53 @@
 package Model;
 import java.util.*;
 
-/** @pdOid cb3ced41-e2e0-476f-8d0c-7d5d89192039 */
 public class PodaciZaSlanje {
-   /** @pdOid 3ace18c2-fb7c-4830-b299-d7d61b4291da */
    private String adresa;
-   /** @pdOid dfa8b3b1-4074-499c-815d-8cc265740bc4 */
-   private int brojTelefona;
-   /** @pdOid 8fdc5273-be20-4d69-b847-ea74b0405c32 */
+   private String brojTelefona;
    private String ime;
-   /** @pdOid 324e2673-78c5-400f-86fd-cdd4565fbf08 */
    private String prezime;
+   private String brKartice;
+
+   public String getAdresa() {
+      return adresa;
+   }
+
+   public void setAdresa(String adresa) {
+      this.adresa = adresa;
+   }
+
+   public String getBrojTelefona() {
+      return brojTelefona;
+   }
+
+   public void setBrojTelefona(String brojTelefona) {
+      this.brojTelefona = brojTelefona;
+   }
+
+   public String getIme() {
+      return ime;
+   }
+
+   public void setIme(String ime) {
+      this.ime = ime;
+   }
+
+   public String getPrezime() {
+      return prezime;
+   }
+
+   public void setPrezime(String prezime) {
+      this.prezime = prezime;
+   }
+
+   public String getBrKartice() {
+      return brKartice;
+   }
+
+   public void setBrKartice(String brKartice) {
+      this.brKartice = brKartice;
+   }
+
+
 
 }

@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Korisnik;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -45,7 +46,7 @@ public class ChangeProfileController implements Initializable {
 
     @FXML
     void nazadButtonPushed(ActionEvent event) throws IOException {
-        Parent registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/StartWindowLogU.fxml"));
+        Parent registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/StartWindowLoggedUser.fxml"));
 
         Scene registrovanjeScene = new Scene(registrovanjeParent);
 
@@ -92,5 +93,12 @@ public class ChangeProfileController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        prezimeText.setText(((Korisnik)Main.trenutniKorisnik).getPodaciZaSlanje().getPrezime());
+        kimeText.setText(Main.trenutniKorisnik.getKorisnickoIme());
+        lozinkaText.setText(Main.trenutniKorisnik.getLozinka());
+        adresaText.setText(((Korisnik)Main.trenutniKorisnik).getPodaciZaSlanje().getAdresa());
+        imeText.setText(((Korisnik)Main.trenutniKorisnik).getPodaciZaSlanje().getIme());
+        brTelText.setText(((Korisnik)Main.trenutniKorisnik).getPodaciZaSlanje().getBrojTelefona());
+        email.setText(Main.trenutniKorisnik.getMejl());
     }
 }

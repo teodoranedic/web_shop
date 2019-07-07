@@ -1,5 +1,7 @@
 package Controller;
 
+import FileHandler.KorisniciFile;
+import Model.Registrovani;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,14 +38,19 @@ public class LogWindowController implements Initializable {
         String korIme = kImeText.getText();
         String lozinka = lozinkaText.getText();
 
-        //treba da bude implementirana provera umesto ovoga a unutar provere ovo
-        Parent logovanjeParent = FXMLLoader.load(getClass().getResource("/View/StartWindowLoggedUser.fxml"));
-        Scene logovanjeScene = new Scene(logovanjeParent);
-        //This line gets the Stage information
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(logovanjeScene);
-        window.show();
+        if(KorisniciFile.daLiPostoji(korIme, lozinka)){
+            Main.trenutniKorisnik = Main.korisnici.get(korIme);
 
+            Parent logovanjeParent = FXMLLoader.load(getClass().getResource("/View/StartWindowLoggedUser.fxml"));
+            Scene logovanjeScene = new Scene(logovanjeParent);
+            //This line gets the Stage information
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(logovanjeScene);
+            window.show();
+
+        }else{
+            porukaLabela.setText("Neispravni podaci!");
+        }
     }
 
     @FXML

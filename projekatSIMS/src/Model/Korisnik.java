@@ -1,11 +1,35 @@
 package Model;
 import java.util.*;
 
-/** @pdOid 7456d81e-ca9e-4589-b655-f1c463935706 */
 public class Korisnik {
-   /** @pdRoleInfo migr=no name=PodaciZaSlanje assc=association1 mult=1..1 */
-   public PodaciZaSlanje podaciZaSlanje;
-   /** @pdRoleInfo migr=no name=Korpa assc=association2 mult=1..1 */
-   public Korpa korpa;
+   protected PodaciZaSlanje podaciZaSlanje = new PodaciZaSlanje();
+   protected Korpa korpa;
+
+   public PodaciZaSlanje getPodaciZaSlanje() {
+      return podaciZaSlanje;
+   }
+
+   public void setPodaciZaSlanje(PodaciZaSlanje podaciZaSlanje) {
+      this.podaciZaSlanje = podaciZaSlanje;
+   }
+
+   public Korpa getKorpa() {
+      return korpa;
+   }
+
+   public void setKorpa(Korpa korpa) {
+      this.korpa = korpa;
+   }
+
+   public Korisnik(String[] tokens) {
+      podaciZaSlanje.setIme(tokens[2]);
+      podaciZaSlanje.setPrezime(tokens[3]);
+      podaciZaSlanje.setAdresa(tokens[4]);
+      podaciZaSlanje.setBrojTelefona(tokens[6]);
+      podaciZaSlanje.setBrKartice(tokens[7]);
+   }
+
+   public Korisnik(){}
+
 
 }

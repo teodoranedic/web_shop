@@ -1,0 +1,2 @@
+kime|lozinka|ime|prezime|adresa|mejl|brojTelefona|brojKartice
+tam|tam|Tamara|Glisic|Pere Perica 2 Novi Sad|tamara@gmail.com|0602515624|15616546446
