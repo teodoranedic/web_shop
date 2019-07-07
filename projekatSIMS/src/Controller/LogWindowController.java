@@ -36,14 +36,14 @@ public class LogWindowController implements Initializable {
         String korIme = kImeText.getText();
         String lozinka = lozinkaText.getText();
 
-       /*
-        Parent logovanjeParent = FXMLLoader.load(getClass().getResource("CheckWindow.fxml"));
+        //treba da bude implementirana provera umesto ovoga a unutar provere ovo
+        Parent logovanjeParent = FXMLLoader.load(getClass().getResource("/View/StartWindowLoggedUser.fxml"));
         Scene logovanjeScene = new Scene(logovanjeParent);
         //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(logovanjeScene);
         window.show();
-        */
+
     }
 
     @FXML

@@ -41,6 +41,9 @@ public class SignUpWindowController implements Initializable {
     private TextField brTelText;
 
     @FXML
+    private TextField email;
+
+    @FXML
     void nazadButtonPushed(ActionEvent event) throws IOException {
         Parent registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/StartWindow.fxml"));
 
@@ -57,7 +60,7 @@ public class SignUpWindowController implements Initializable {
     void signUpButtonPushed(ActionEvent event) throws IOException {
         // TODO: provera podataka (da li postoji korisnicko ime u bazi) - dodati else if izmedju
         if(imeText.getText().equals(" ") || prezimeText.getText().equals("") || adresaText.getText().equals("")
-            || brTelText.getText().equals("") || kimeText.getText().equals("")||lozinkaText.getText().equals("")) {
+            || brTelText.getText().equals("") || kimeText.getText().equals("")||lozinkaText.getText().equals("") || email.getText().equals("")) {
             porukaLabela.setText("Sva polja su obavezna!");
         } else {
             // TODO: dodati korisnika u bazu
