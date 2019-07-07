@@ -17,6 +17,8 @@ public class StartWindowLogUController implements Initializable {
 
         @FXML
         public void logOutButtonPushed(ActionEvent event) throws IOException, IOException {
+
+            Main.trenutniKorisnik = null;
             Parent odjavaParent = FXMLLoader.load(getClass().getResource("/View/StartWindow.fxml"));
             Scene odjavaScene = new Scene(odjavaParent);
 

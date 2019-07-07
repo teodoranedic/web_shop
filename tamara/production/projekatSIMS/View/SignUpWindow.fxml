@@ -27,7 +27,7 @@
       <Button fx:id="registrovanjeButton" layoutX="429.0" layoutY="337.0" mnemonicParsing="false" onAction="#signUpButtonPushed" text="Registruj se" />
       <Label fx:id="porukaLabela" layoutX="133.0" layoutY="28.0" prefHeight="21.0" prefWidth="266.0" text=" " />
       <Label layoutX="75.0" layoutY="314.0" text="E-mail:" />
-      <TextField layoutX="133.0" layoutY="310.0" />
+      <TextField fx:id="email" layoutX="133.0" layoutY="310.0" />
       <Label layoutX="41.0" layoutY="358.0" prefHeight="21.0" prefWidth="82.0" text="Broj kartice:" />
       <TextField fx:id="karticaText" layoutX="133.0" layoutY="353.0" />
    </children>

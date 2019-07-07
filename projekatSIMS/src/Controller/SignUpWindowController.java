@@ -1,5 +1,7 @@
 package Controller;
 
+import FileHandler.KorisniciFile;
+import Model.Registrovani;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -61,10 +63,15 @@ public class SignUpWindowController implements Initializable {
     void signUpButtonPushed(ActionEvent event) throws IOException {
         // TODO: provera podataka (da li postoji korisnicko ime u bazi) - dodati else if izmedju
         if(imeText.getText().equals("") || prezimeText.getText().equals("") || adresaText.getText().equals("")
-            || brTelText.getText().equals("") || kimeText.getText().equals("")||lozinkaText.getText().equals("") || email.getText().equals("")) {
+            || brTelText.getText().equals("") || kimeText.getText().equals("")||
+                lozinkaText.getText().equals("") || email.getText().equals("")) {
             porukaLabela.setText("Sva polja su obavezna!");
         } else {
             // TODO: dodati korisnika u bazu
+            Registrovani reg = new Registrovani(imeText.getText(), prezimeText.getText(), adresaText.getText(), brTelText.getText(),
+                    karticaText.getText(), kimeText.getText(), lozinkaText.getText(), email.getText());
+            Main.korisnici.put(reg.getKorisnickoIme(), reg);
+            KorisniciFile.dodajUFajl(reg);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Obavestenje");
             alert.setHeaderText("Obavestenje");

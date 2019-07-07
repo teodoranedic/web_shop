@@ -39,4 +39,11 @@ public class Registrovani extends Korisnik {
    }
 
    public Registrovani() {}
+
+   public Registrovani(String ime, String prezime, String adresa, String brTelefona, String brKartice, String korisnickoIme, String lozinka, String mejl) {
+      super(ime, prezime, adresa, brTelefona, brKartice);
+      this.korisnickoIme = korisnickoIme;
+      this.lozinka = lozinka;
+      this.mejl = mejl;
+   }
 }

@@ -31,5 +31,11 @@ public class Korisnik {
 
    public Korisnik(){}
 
-
+   public Korisnik(String ime, String prezime, String adresa, String brTelefona, String brKartice) {
+      podaciZaSlanje.setIme(ime);
+      podaciZaSlanje.setPrezime(prezime);
+      podaciZaSlanje.setAdresa(adresa);
+      podaciZaSlanje.setBrojTelefona(brTelefona);
+      podaciZaSlanje.setBrKartice(brKartice);
+   }
 }
