@@ -1,8 +1,7 @@
 package Controller;
 
-import FileHandler.KorisniciFile;
-import Model.Proizvod;
-import Model.Registrovani;
+import FileHandler.*;
+import Model.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,12 +11,19 @@ import javafx.scene.image.Image;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Main extends Application {
 
     public static HashMap<String, Registrovani> korisnici = new HashMap<String, Registrovani>();
     public static HashMap<String, Proizvod> proizvodi = new HashMap<String, Proizvod>();
+    public static HashMap<String, Boja> boje = new HashMap<String, Boja>();
+    public static ArrayList<Kategorija> kategorije = new ArrayList<Kategorija>();
+    public static ArrayList<Velicina> velicine = new ArrayList<Velicina>();
+    public static ArrayList<StavkaCenovnika> stavkeCenovnika = new ArrayList<StavkaCenovnika>();
+
 
     public static Proizvod trenutniProizvod  = new Proizvod();
     public static Registrovani trenutniKorisnik = new Registrovani();
@@ -30,6 +36,41 @@ public class Main extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        try {
+            BojeFile.ucitaj();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            KategorijeFile.ucitaj();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            StavkeFile.ucitaj();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            VelicineFile.ucitaj();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            ProizvodiFile.ucitaj();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /*for (String p:proizvodi.keySet()) {
+            System.out.println(p);
+        }*/
+
         Parent root = FXMLLoader.load(getClass().getResource("/View/StartWindow.fxml"));
         primaryStage.setTitle("GlobusApp");
         primaryStage.getIcons().add(new Image("/icons/AppIcon.png"));

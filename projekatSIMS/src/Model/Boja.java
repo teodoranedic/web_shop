@@ -4,19 +4,23 @@ import java.lang.String;
 
 public class Boja {
 
-   private int sifra;
+   private String sifra; //promenila sam na string i onda se stavlja pravi naziv za boju iz fx-a
    private String naziv;
 
-   public Boja(int sifra, String naziv) {
+   public Boja(String sifra, String naziv) {
       this.sifra = sifra;
       this.naziv = naziv;
    }
+   public Boja(String[] tokens) {
+      this.sifra = tokens[0];
+      this.naziv = tokens[1];
+   }
 
-   public int getSifra() {
+   public String getSifra() {
       return sifra;
    }
 
-   public void setSifra(int sifra) {
+   public void setSifra(String sifra) {
       this.sifra = sifra;
    }
 
