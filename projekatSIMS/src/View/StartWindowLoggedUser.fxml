@@ -52,5 +52,6 @@
         </ImageView>
         <ComboBox fx:id="female" layoutX="103.0" layoutY="84.0" onAction="#comboChanged" prefHeight="25.0" prefWidth="71.0" promptText="Zene" />
         <ComboBox fx:id="price" layoutX="353.0" layoutY="84.0" onAction="#comboChanged" prefHeight="25.0" prefWidth="107.0" promptText="raspon cene" />
+      <Button fx:id="searchF" layoutX="472.0" layoutY="84.0" mnemonicParsing="false" onAction="#nadjiClicked" text="Nadji" />
     </children>
 </AnchorPane>
