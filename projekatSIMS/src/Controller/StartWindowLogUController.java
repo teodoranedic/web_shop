@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import static Controller.Main.*;
@@ -34,6 +35,7 @@ public class StartWindowLogUController implements Initializable {
         public GridPane roott = new GridPane();
 
         @FXML
+        public Label message = new Label("Nema rezultata pretrage.");
         public TextField search = new TextField();
         public Button searchButton = new Button();
         public ComboBox<String> male = new ComboBox<String>();
@@ -131,13 +133,89 @@ public class StartWindowLogUController implements Initializable {
 
         }
 
+        public void ispisProizvoda(HashMap<String,Proizvod> hm) {
+                for (String s : hm.keySet()) {
+                        Image image = new Image(s);
+                        ImageView view = new ImageView(image);
+                        root.getChildren().add(view);
+                        root.setSpacing(10);
+                        root.setPadding(new Insets(10));
+                }
+        };
+
+        public void ispisProizvodaP(HashMap<String, Proizvod> hm, String kombo) {
+                int uspesno = 0;
+                for (Proizvod p: hm.values()) {
+                        if (p.getKategorija().getNaziv().equals(kombo)) {
+                                uspesno = 1;
+                                Image image = new Image(p.getSlika());
+                                ImageView view = new ImageView(image);
+                                root.getChildren().add(view);
+                                root.setSpacing(10);
+                                root.setPadding(new Insets(10));
+                        }
+                }
+                if (uspesno==0){
+                        root.getChildren().add(message);
+                        root.setSpacing(10);
+                        root.setPadding(new Insets(10));
+                }
+        }
+
+        public int IspisBoja(HashMap<String,Proizvod> hm, String kombo) {
+                int uspesno = 0;
+                for (Proizvod p : hm.values()) {
+                        for (Boja b : p.getBoja()) {
+                                if (b.getNaziv().equals(kombo) && p.getKategorija().equals(komboMuskarci)) {
+                                        uspesno = 1;
+                                        Image image = new Image(p.getSlika());
+                                        ImageView view = new ImageView(image);
+                                        root.getChildren().add(view);
+                                        root.setSpacing(10);
+                                        root.setPadding(new Insets(10));
+                                }
+                        }
+                }
+                return uspesno;
+        }
+
+        public void IspisCena(HashMap<String,Proizvod>hm, int min, int max) {
+                for (Proizvod p : hm.values()) {
+                        if (min <= p.getStavkaCenovnika() && p.getStavkaCenovnika()<= max) {
+                                Image image = new Image(p.getSlika());
+                                ImageView view = new ImageView(image);
+                                root.getChildren().add(view);
+                                root.setSpacing(10);
+                                root.setPadding(new Insets(10));
+                        } else {
+
+                        }
+                }
+        }
+
+        public void Pretraga(HashMap<String,Proizvod>hm) {
+                for (Proizvod p : hm.values()) {
+                        if (trazi.equals(p.getNaziv().toUpperCase()) || trazi.equals(p.getNaziv().toLowerCase()) || trazi.equals(p.getNaziv()) ) {
+                                Image image = new Image(p.getSlika());
+                                ImageView view = new ImageView(image);
+                                root.getChildren().add(view);
+                                root.setSpacing(10);
+                                root.setPadding(new Insets(10));
+                        }
+                        else {}
+                }
+
+
+        }
+
+
         @Override
         public void initialize(URL location, ResourceBundle resources) {
-                for (Kategorija k : kategorije) {
+                for (Kategorija k: kategorije) {
                         maleList.add(k.getNaziv());
                         femaleList.add(k.getNaziv());
                 }
-                for (Boja b : Main.boje.values()) {
+                for (Boja b: Main.boje.values()) {
                         colorList.add(b.getNaziv());
                 }
 
@@ -149,158 +227,60 @@ public class StartWindowLogUController implements Initializable {
                 price.setItems(priceList);
 
                 if (komboMuskarci.equals("") && komboZene.equals("") && komboSort.equals("") && komboBoja.equals("") && komboCena.equals("") && trazi.equals("")) {
-                        for (String s : Main.proizvodiMuski.keySet()) {
-                                Image image = new Image(s);
-                                ImageView view = new ImageView(image);
-                                root.getChildren().add(view);
+
+                        ispisProizvoda(proizvodiZenski);
+                        ispisProizvoda(proizvodiMuski);
+                }
+                if (komboMuskarci!="" ) { //ispis kada su odabrani muski proizvodi
+                        komboBoja = "";
+                        komboCena = "";
+                        ispisProizvodaP(proizvodiMuski, komboMuskarci);
+                }
+
+
+                if (komboZene != "" ) { //ispis kada su odabrani zenski proizvodi
+                        komboBoja = "";
+                        komboCena = "";
+                        ispisProizvodaP(proizvodiZenski, komboZene);
+                }
+
+                if (komboBoja!="") { //ispis po boji
+                        int uspesno = 0;
+                        if (komboZene != "" || (komboZene == "" && komboMuskarci == "")) {
+                                uspesno += IspisBoja(proizvodiZenski, komboBoja);
+
+                        }
+                        if (komboMuskarci!= "" || (komboZene == "" && komboMuskarci == "")) {
+                                uspesno += IspisBoja(proizvodiMuski, komboBoja);
+                        }
+                        if (uspesno==0){
+                                root.getChildren().add(message);
                                 root.setSpacing(10);
                                 root.setPadding(new Insets(10));
                         }
-                        for (String s : Main.proizvodiZenski.keySet()) {
-                                Image image = new Image(s);
-                                ImageView view = new ImageView(image);
-                                root.getChildren().add(view);
-                                root.setSpacing(10);
-                                root.setPadding(new Insets(10));
-                        }
-
-                        scrollPane.setContent(root);
-                        scrollPane.setPannable(true);
-                }
-                if (komboMuskarci != "") {
-                        komboBoja = "";
-                        komboCena = "";
-                        for (Proizvod p : Main.proizvodiMuski.values()) {
-                                if (p.getKategorija().getNaziv().equals(komboMuskarci)) {
-                                        Image image = new Image(p.getSlika());
-                                        ImageView view = new ImageView(image);
-                                        root.getChildren().add(view);
-                                        root.setSpacing(10);
-                                        root.setPadding(new Insets(10));
-                                } else {
-                                }
-                        }
-                        scrollPane.setContent(root);
-                        scrollPane.setPannable(true);
                 }
 
-
-                if (komboZene != "") {
-                        komboBoja = "";
-                        komboCena = "";
-                        for (Proizvod p : proizvodiZenski.values()) {
-                                if (p.getKategorija().getNaziv().equals(komboZene)) {
-                                        Image image = new Image(p.getSlika());
-                                        ImageView view = new ImageView(image);
-                                        root.getChildren().add(view);
-                                        root.setSpacing(10);
-                                        root.setPadding(new Insets(10));
-                                } else {
-
-                                }
-
-                        }
-                        scrollPane.setContent(root);
-                        scrollPane.setPannable(true);
-                }
-
-                if (komboBoja != "") {
+                if (komboCena != "") { //ispis po rasponu cene
+                        int min = Integer.parseInt(komboCena.substring(0,komboCena.indexOf("-")));
+                        int max = Integer.parseInt(komboCena.substring(komboCena.indexOf("-")+1, komboCena.length()));
                         if (komboZene != "" || (komboZene == "" && komboMuskarci == "")) {
-                                for (Proizvod p : proizvodiZenski.values()) {
-                                        for (Boja b : p.getBoja()) {
-                                                if (b.getNaziv().equals(komboBoja)) {
-                                                        Image image = new Image(p.getSlika());
-                                                        ImageView view = new ImageView(image);
-                                                        root.getChildren().add(view);
-                                                        root.setSpacing(10);
-                                                        root.setPadding(new Insets(10));
-                                                } else {
+                                IspisCena(proizvodiZenski, min, max);
 
-                                                }
-                                        }
-                                }
-                                scrollPane.setContent(root);
-                                scrollPane.setPannable(true);
                         }
-                        if (komboMuskarci != "" || (komboZene == "" && komboMuskarci == "")) {
-                                for (Proizvod p : proizvodiMuski.values()) {
-                                        for (Boja b : p.getBoja()) {
-                                                if (b.getNaziv().equals(komboBoja)) {
-                                                        Image image = new Image(p.getSlika());
-                                                        ImageView view = new ImageView(image);
-                                                        root.getChildren().add(view);
-                                                        root.setSpacing(10);
-                                                        root.setPadding(new Insets(10));
-                                                } else {
+                        if (komboMuskarci!= "" || (komboZene == "" && komboMuskarci == "")) {
+                                IspisCena(proizvodiMuski, min, max);
 
-                                                }
-                                        }
-                                }
-                                scrollPane.setContent(root);
-                                scrollPane.setPannable(true);
                         }
                 }
-                if (komboCena != "") {
-                        int min = Integer.parseInt(komboCena.substring(0, komboCena.indexOf("-")));
-                        int max = Integer.parseInt(komboCena.substring(komboCena.indexOf("-") + 1, komboCena.length()));
-                        System.out.println(max);
-                        if (komboZene != "" || (komboZene == "" && komboMuskarci == "")) {
-                                for (Proizvod p : proizvodiZenski.values()) {
-                                        if (min <= p.getStavkaCenovnika() && p.getStavkaCenovnika() <= max) {
-                                                Image image = new Image(p.getSlika());
-                                                ImageView view = new ImageView(image);
-                                                root.getChildren().add(view);
-                                                root.setSpacing(10);
-                                                root.setPadding(new Insets(10));
-                                        } else {
 
-                                        }
-                                }
-                                scrollPane.setContent(root);
-                                scrollPane.setPannable(true);
-                        }
-                        if (komboMuskarci != "" || (komboZene == "" && komboMuskarci == "")) {
-                                for (Proizvod p : proizvodiMuski.values()) {
-                                        if (min <= p.getStavkaCenovnika() && p.getStavkaCenovnika() <= max) {
-                                                Image image = new Image(p.getSlika());
-                                                ImageView view = new ImageView(image);
-                                                root.getChildren().add(view);
-                                                root.setSpacing(10);
-                                                root.setPadding(new Insets(10));
-                                        } else {
-
-                                        }
-                                }
-                                scrollPane.setContent(root);
-                                scrollPane.setPannable(true);
-                        }
-                }
                 if (trazi != "") {
-                        for (Proizvod p : Main.proizvodiMuski.values()) {
-                                if (trazi.equals(p.getNaziv().toUpperCase()) || trazi.equals(p.getNaziv().toLowerCase()) || trazi.equals(p.getNaziv())) {
-                                        Image image = new Image(p.getSlika());
-                                        ImageView view = new ImageView(image);
-                                        root.getChildren().add(view);
-                                        root.setSpacing(10);
-                                        root.setPadding(new Insets(10));
-                                } else {
-                                }
-                        }
-                        for (Proizvod p : Main.proizvodiZenski.values()) {
-
-                                if (trazi.equals(p.getNaziv().toUpperCase()) || trazi.equals(p.getNaziv().toLowerCase()) || trazi.equals(p.getNaziv())) {
-                                        Image image = new Image(p.getSlika());
-                                        ImageView view = new ImageView(image);
-                                        root.getChildren().add(view);
-                                        root.setSpacing(10);
-                                        root.setPadding(new Insets(10));
-                                } else {
-                                }
-                        }
-
-                        scrollPane.setContent(root);
-                        scrollPane.setPannable(true);
+                        Pretraga(proizvodiMuski);
+                        Pretraga(proizvodiZenski);
                         trazi = "";
                 }
+                scrollPane.setContent(root);
+                scrollPane.setPannable(true);
         }
+
 }
+

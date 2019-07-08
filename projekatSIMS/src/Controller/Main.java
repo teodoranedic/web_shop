@@ -34,6 +34,7 @@ public class Main extends Application {
 
 
     public static Proizvod trenutniProizvod  = new Proizvod();
+    public static String trenutnoIscrtani = "";
     public static Registrovani trenutniKorisnik = new Registrovani();
 
     @Override
