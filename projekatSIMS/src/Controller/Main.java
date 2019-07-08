@@ -17,8 +17,16 @@ import java.util.HashSet;
 
 public class Main extends Application {
 
+    public static String komboMuskarci = "";
+    public static String komboZene = "";
+    public static String komboSort = "";
+    public static String komboBoja = "";
+    public static String komboCena = "";
+    public static String trazi = "";
+
     public static HashMap<String, Registrovani> korisnici = new HashMap<String, Registrovani>();
-    public static HashMap<String, Proizvod> proizvodi = new HashMap<String, Proizvod>();
+    public static HashMap<String, Proizvod> proizvodiZenski = new HashMap<String, Proizvod>();
+    public static HashMap<String, Proizvod> proizvodiMuski = new HashMap<String, Proizvod>();
     public static HashMap<String, Boja> boje = new HashMap<String, Boja>();
     public static ArrayList<Kategorija> kategorije = new ArrayList<Kategorija>();
     public static ArrayList<Velicina> velicine = new ArrayList<Velicina>();
@@ -61,7 +69,13 @@ public class Main extends Application {
             e.printStackTrace();
         }
         try {
-            ProizvodiFile.ucitaj();
+            ProizvodiFile.ucitaj("./data/proizvodiMuski.txt");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            ProizvodiFile.ucitaj("./data/proizvodiZenski.txt");
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,5 +1,0 @@
-Atticus|1|muske naocare Tom Ford|20300|black;saddlebrown|36;38|musko|/products/TomFnaocare.jpg
-Kosulja|2|muska kosulja Zara|20300|white|38;47|musko|/products/manShirt.jpg
-Dzemper|3|zenski dzemper Zara|20300|white;black|36|zensko|/products/Zarajumper.jpg
-Sorts|4|zenski sorts Zara|20300|white;black|36,38|zensko|/products/ZaraSkirt.jpg
-Torba|5|zenska torba Versace|50000|white;black|36|zensko|/products/versaceBag.jpg

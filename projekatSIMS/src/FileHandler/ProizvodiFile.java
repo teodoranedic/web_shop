@@ -8,12 +8,20 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ForkJoinPool;
 
 public class ProizvodiFile {
-    static String fileName = "./data/proizvodi.txt";
 
-    public static void ucitaj() throws FileNotFoundException, IOException {
+
+    public static void ucitaj(String fileName) throws FileNotFoundException, IOException {
         BufferedReader br = new BufferedReader(new FileReader(fileName));
+        String odluka = "";
+        if (fileName.contains("proizvodiZenski")) {
+            odluka = "f";
+        }
+        else {
+            odluka = "m";
+        }
         String line;
         while ((line = br.readLine()) != null) {
             String[] tokens = line.split("\\|");
@@ -43,15 +51,24 @@ public class ProizvodiFile {
             }
             p.setBoja(boje);
 
+
             if (tokens[5].contains(";")) {
                 tokSizes = tokens[5].split(";");
                 for ( int i= 0; i < tokSizes.length; i++) {
-                    if (Main.velicine.contains(Integer.parseInt(tokSizes[i]))) {
+                    for (Velicina v: Main.velicine) {
+                        if (Integer.parseInt(tokSizes[i]) == v.getSifra()) {
+                            velicine.add(v);
+                            break;
+                        }
+                    }
+                    /*if (Main.velicine.contains(Integer.parseInt(tokSizes[i]))) { //ne znam zbog cega ovaj kod ne radi
+
                         int index = Main.velicine.indexOf(Integer.parseInt(tokSizes[i]));
                         velicine.add(Main.velicine.get(index));
-                    }
+                    }*/
                 }
             }
+
             else {
                 if (Main.velicine.contains(tokens[5])){
                     int index = Main.velicine.indexOf(tokens[5]);
@@ -60,15 +77,20 @@ public class ProizvodiFile {
             }
             p.setVelicina(velicine);
 
-
-            if (Main.kategorije.contains(tokens[6])) {
-                    int index = Main.kategorije.indexOf(tokens[6]);
-                    p.setKategorija(Main.kategorije.get(index));
+            for (Kategorija k: Main.kategorije) {
+                if (tokens[6].equals(k.getNaziv())){
+                    p.setKategorija(k);
+                    break;
+                }
             }
 
             p.setSlika(tokens[7]);
-
-            Main.proizvodi.put(p.getSlika(), p);
+            if (odluka.equals("m")) {
+                Main.proizvodiMuski.put(p.getSlika(), p);
+            }
+            else {
+                Main.proizvodiZenski.put(p.getSlika(), p);
+            }
         }
         br.close();
     }

@@ -1,0 +1,2 @@
+Atticus|1|muske naocare Tom Ford|20300|black;saddlebrown|36;38|naocare|/productsMale/TomFnaocare.jpg
+Kosulja|2|muska kosulja Zara|20300|white|38;47|kosulje|/productsMale/manShirt.jpg

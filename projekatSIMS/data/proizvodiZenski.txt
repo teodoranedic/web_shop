@@ -1,0 +1,3 @@
+Dzemper|3|zenski dzemper Zara|20300|white;black|36|dzemperi|/productsFemale/Zarajumper.jpg
+Sorts|4|zenski sorts Zara|20300|white;black|36;38|sortsevi|/productsFemale/ZaraSkirt.jpg
+Torba|5|zenska torba Versace|50000|white;black|36|torbe|/productsFemale/versaceBag.jpg
