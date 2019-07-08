@@ -3,6 +3,26 @@ import java.util.*;
 
 
 public class Korpa {
-   public ImaUKorpi[] association3;
+   // parovi proizvod, odabrana kolicina
+   private HashMap<Proizvod, Integer> proizvodi;
 
+   public Korpa() {
+      proizvodi = new HashMap<>();
+   }
+
+   public Korpa(HashMap<Proizvod, Integer> proizvodi) {
+      this.proizvodi = proizvodi;
+   }
+
+   public HashMap<Proizvod, Integer> getProizvodi() {
+      return proizvodi;
+   }
+
+   public void setProizvodi(HashMap<Proizvod, Integer> proizvodi) {
+      this.proizvodi = proizvodi;
+   }
+
+   public void dodajProizvod(Proizvod p, int kolicina){
+      proizvodi.put(p, kolicina);
+   }
 }

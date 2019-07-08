@@ -34,6 +34,7 @@ public class ProizvodiFile {
             Proizvod p = new Proizvod();
             p.setNaziv(tokens[0]);
             p.setSifra(Integer.parseInt(tokens[1]));
+            p.setOpis(tokens[2]);
 
             p.setStavkaCenovnika(Double.parseDouble(tokens[3]));
             if (tokens[4].contains(";")) {
@@ -70,9 +71,10 @@ public class ProizvodiFile {
             }
 
             else {
-                if (Main.velicine.contains(tokens[5])){
-                    int index = Main.velicine.indexOf(tokens[5]);
-                    velicine.add(Main.velicine.get(index));
+                for(Velicina v: Main.velicine) {
+                    if (v.getSifra() == Integer.parseInt(tokens[5])) {
+                        velicine.add(v);
+                    }
                 }
             }
             p.setVelicina(velicine);

@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Korisnik {
    protected PodaciZaSlanje podaciZaSlanje = new PodaciZaSlanje();
-   protected Korpa korpa;
+   protected Korpa korpa = new Korpa();
 
    public PodaciZaSlanje getPodaciZaSlanje() {
       return podaciZaSlanje;

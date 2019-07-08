@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -137,6 +138,26 @@ public class StartWindowLogUController implements Initializable {
                 for (String s : hm.keySet()) {
                         Image image = new Image(s);
                         ImageView view = new ImageView(image);
+                        view.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                                // na klik proizvoda setuje se trenutni proizvod i prelazi se na scenu za prikaz proizvoda
+                                Main.trenutniProizvod = hm.get(s);
+
+                                Parent proizvodParent = null;
+                                try {
+                                        proizvodParent = FXMLLoader.load(getClass().getResource("/View/Product.fxml"));
+                                } catch (IOException e) {
+                                        e.printStackTrace();
+                                }
+                                Scene proizvodScene = new Scene(proizvodParent);
+
+                                //This line gets the Stage information
+                                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+                                window.setScene(proizvodScene);
+                                window.show();
+
+                                event.consume();
+                        });
                         root.getChildren().add(view);
                         root.setSpacing(10);
                         root.setPadding(new Insets(10));

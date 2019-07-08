@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProductController">
+   <children>
+      <Button layoutX="383.0" layoutY="319.0" mnemonicParsing="false" onAction="#dodajUKorpuClicked" prefHeight="31.0" prefWidth="150.0" text="Dodaj u korpu" />
+      <ComboBox fx:id="comboVelicina" layoutX="383.0" layoutY="151.0" onAction="#setVelicina" prefWidth="150.0" promptText="Velicina" />
+      <ComboBox fx:id="comboBoja" layoutX="383.0" layoutY="200.0" onAction="#setBoja" prefWidth="150.0" promptText="Boja" />
+      <Label layoutX="311.0" layoutY="266.0" prefHeight="21.0" prefWidth="65.0" text="Kolicina:" />
+      <TextField fx:id="kolicinaText" layoutX="383.0" layoutY="261.0" onAction="#setKolicina" prefHeight="31.0" prefWidth="150.0" promptText="1" text="1" />
+      <Label fx:id="nazivProizvodaLabela" layoutX="344.0" layoutY="38.0" prefHeight="21.0" prefWidth="188.0" text=" " textFill="#498d5a">
+         <font>
+            <Font name="Microsoft PhagsPa Bold" size="23.0" />
+         </font>
+      </Label>
+      <Label fx:id="cenaLabela" layoutX="344.0" layoutY="73.0" prefHeight="21.0" prefWidth="102.0" text=" " />
+      <ScrollPane fx:id="scrollPane" layoutX="15.0" layoutY="53.0" prefHeight="234.0" prefWidth="291.0">
+        <content>
+          <AnchorPane fx:id="imagePane" minHeight="0.0" minWidth="0.0" prefHeight="346.0" prefWidth="442.0" />
+        </content>
+      </ScrollPane>
+      <Label fx:id="textOpis" layoutX="27.0" layoutY="295.0" prefHeight="70.0" prefWidth="230.0" text=" " />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#nazadButtonPushed" text="Nazad" />
+   </children>
+</AnchorPane>

@@ -16,6 +16,8 @@ public class Proizvod {
 
 
    public Proizvod() {
+      boja = new ArrayList<>();
+      velicina = new ArrayList<>();
    }
 
    public Proizvod(String naziv, int sifra, String opis, double stavkaCenovnika, ArrayList<Boja> boja, ArrayList<Velicina> velicina, Kategorija kategorija, String slika) {
