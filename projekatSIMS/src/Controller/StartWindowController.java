@@ -159,14 +159,17 @@ public class StartWindowController implements Initializable {
         }
     }
 
-    public int IspisBoja(HashMap<String,Proizvod> hm, String kombo) {
+    public int IspisBoja(HashMap<String,Proizvod> hm, int k) {
         int uspesno = 0;
         for (Proizvod p : hm.values()) {
             for (Boja b : p.getBoja()) {
-                if (b.getNaziv().equals(kombo) && p.getKategorija().equals(komboMuskarci)) {
+                if (b.getNaziv().equals(komboBoja)){
                     uspesno = 1;
                     Image image = new Image(p.getSlika());
                     ImageView view = new ImageView(image);
+                    if (k==1) {
+                        root.getChildren().clear();
+                    }
                     root.getChildren().add(view);
                     root.setSpacing(10);
                     root.setPadding(new Insets(10));
@@ -175,19 +178,76 @@ public class StartWindowController implements Initializable {
         }
         return uspesno;
     }
+    HashMap<String,Proizvod> modifikovanaZene = new HashMap<String,Proizvod>();
+    public int IspisBojaZene(HashMap<String, Proizvod> hm) {
+        int uspesno = 0;
+        for (Proizvod p : hm.values()){ //svaki proizvod se proverava
+            if (p.getKategorija().getNaziv().equals(komboZene)){
+                modifikovanaZene.put(p.getSlika(), p);
+            }
+        }
+        if (!modifikovanaZene.isEmpty()) {
+            uspesno = IspisBoja(modifikovanaZene, 1);
+        }
+        return  uspesno;
+    }
+    HashMap<String,Proizvod> modifikovanaMuskarci = new HashMap<String,Proizvod>();
+    public int IspisBojaMuskarci(HashMap<String, Proizvod> hm) {
 
-    public void IspisCena(HashMap<String,Proizvod>hm, int min, int max) {
+        int uspesno = 0;
+        for (Proizvod p : hm.values()){ //svaki proizvod se proverava
+            if (p.getKategorija().getNaziv().equals(komboMuskarci)){
+                modifikovanaMuskarci.put(p.getSlika(), p);
+            }
+        }
+        if (!modifikovanaMuskarci.isEmpty()) {
+            uspesno = IspisBoja(modifikovanaMuskarci, 1);
+        }
+        return  uspesno;
+    }
+
+    public int IspisCena(HashMap<String,Proizvod>hm, int min, int max, int k) {
+        int uspesno = 0;
         for (Proizvod p : hm.values()) {
             if (min <= p.getStavkaCenovnika() && p.getStavkaCenovnika()<= max) {
                 Image image = new Image(p.getSlika());
                 ImageView view = new ImageView(image);
+                uspesno = 1;
+                if (k == 1) {
+                    root.getChildren().clear();
+                }
                 root.getChildren().add(view);
                 root.setSpacing(10);
                 root.setPadding(new Insets(10));
-            } else {
-
+            } else {}
+        }
+        return uspesno;
+    }
+    HashMap<String, Proizvod > zeneCeneModifikovana = new HashMap<String, Proizvod>();
+    public int IspisCenaZene(HashMap<String,Proizvod>hm, int min, int max, int k) {
+        int uspesno = 0;
+        for (Proizvod p : hm.values()){ //svaki proizvod se proverava
+            if (p.getKategorija().getNaziv().equals(komboZene)){
+                zeneCeneModifikovana.put(p.getSlika(), p);
             }
         }
+        if (!zeneCeneModifikovana.isEmpty()) {
+            uspesno = IspisCena(zeneCeneModifikovana, min, max, k);
+        }
+        return  uspesno;
+    }
+    HashMap<String, Proizvod > muskarciCeneModifikovana = new HashMap<String, Proizvod>();
+    public int IspisCenaMuskarci(HashMap<String,Proizvod>hm, int min, int max, int k) {
+        int uspesno = 0;
+        for (Proizvod p : hm.values()){ //svaki proizvod se proverava
+            if (p.getKategorija().getNaziv().equals(komboMuskarci)){
+                muskarciCeneModifikovana.put(p.getSlika(), p);
+            }
+        }
+        if (!muskarciCeneModifikovana.isEmpty()) {
+            uspesno = IspisCena(muskarciCeneModifikovana, min, max, k);
+        }
+        return  uspesno;
     }
 
     public void Pretraga(HashMap<String,Proizvod>hm) {
@@ -229,44 +289,71 @@ public class StartWindowController implements Initializable {
             ispisProizvoda(proizvodiMuski);
         }
         if (komboMuskarci!="" ) { //ispis kada su odabrani muski proizvodi
-            komboBoja = "";
-            komboCena = "";
             ispisProizvodaP(proizvodiMuski, komboMuskarci);
         }
 
 
         if (komboZene != "" ) { //ispis kada su odabrani zenski proizvodi
-            komboBoja = "";
-            komboCena = "";
             ispisProizvodaP(proizvodiZenski, komboZene);
         }
 
         if (komboBoja!="") { //ispis po boji
             int uspesno = 0;
-            if (komboZene != "" || (komboZene == "" && komboMuskarci == "")) {
-                uspesno += IspisBoja(proizvodiZenski, komboBoja);
-
+            if (komboZene != "") {
+                uspesno += IspisBojaZene(proizvodiZenski);
             }
-            if (komboMuskarci!= "" || (komboZene == "" && komboMuskarci == "")) {
-                uspesno += IspisBoja(proizvodiMuski, komboBoja);
+            else if (komboZene.equals("") && komboMuskarci.equals("")){
+                uspesno += IspisBoja(proizvodiMuski, 0); //samo muskarce proveri
+                uspesno += IspisBoja(proizvodiZenski, 0); //samo zene proveri
+            }
+            if (komboMuskarci!= "") {
+                uspesno += IspisBojaMuskarci(proizvodiMuski);
             }
             if (uspesno==0){
+                root.getChildren().clear();
                 root.getChildren().add(message);
                 root.setSpacing(10);
                 root.setPadding(new Insets(10));
+                komboMuskarci = "";
+                komboZene = "";
+                komboBoja = "";
+            }
+            else {
+                komboMuskarci = "";
+                komboZene = "";
+                komboBoja = "";
             }
         }
 
         if (komboCena != "") { //ispis po rasponu cene
+            int uspesno = 0;
             int min = Integer.parseInt(komboCena.substring(0,komboCena.indexOf("-")));
             int max = Integer.parseInt(komboCena.substring(komboCena.indexOf("-")+1, komboCena.length()));
-            if (komboZene != "" || (komboZene == "" && komboMuskarci == "")) {
-                IspisCena(proizvodiZenski, min, max);
+            if (komboZene != "") {
+                uspesno += IspisCenaZene(proizvodiZenski, min, max, 1);
 
             }
-            if (komboMuskarci!= "" || (komboZene == "" && komboMuskarci == "")) {
-                IspisCena(proizvodiMuski, min, max);
+            else if (komboZene.equals("") && komboMuskarci.equals("")) {
+                uspesno += IspisCena(proizvodiMuski,min,max,0);
+                uspesno += IspisCena(proizvodiZenski,min,max,0);
+            }
+            else if (komboMuskarci!= "" ){
+                uspesno += IspisCenaMuskarci(proizvodiMuski, min, max, 1);
 
+            }
+            if (uspesno==0){
+                root.getChildren().clear();
+                root.getChildren().add(message);
+                root.setSpacing(10);
+                root.setPadding(new Insets(10));
+                komboMuskarci = "";
+                komboZene = "";
+                komboCena = "";
+            }
+            else {
+                komboMuskarci = "";
+                komboZene = "";
+                komboCena = "";
             }
         }
 
