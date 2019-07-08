@@ -41,47 +41,18 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         try {
+            BojeFile.ucitaj();
+            KategorijeFile.ucitaj();
+            StavkeFile.ucitaj();
+            VelicineFile.ucitaj();
+            ProizvodiFile.ucitaj("./data/proizvodiMuski.txt");
+            ProizvodiFile.ucitaj("./data/proizvodiZenski.txt");
             KorisniciFile.ucitaj();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try {
-            BojeFile.ucitaj();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            KategorijeFile.ucitaj();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            StavkeFile.ucitaj();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            VelicineFile.ucitaj();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            ProizvodiFile.ucitaj("./data/proizvodiMuski.txt");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            ProizvodiFile.ucitaj("./data/proizvodiZenski.txt");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         /*for (String p:proizvodi.keySet()) {
             System.out.println(p);

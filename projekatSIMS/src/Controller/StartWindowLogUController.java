@@ -175,6 +175,7 @@ public class StartWindowLogUController implements Initializable {
                                 komboBoja = "";
                                 komboMuskarci = "";
                                 komboZene = "";
+                                trazi = "";
                         }
                 }
                 scrollPane.setContent(root);
@@ -286,7 +287,7 @@ public class StartWindowLogUController implements Initializable {
                         izlistavanje();
                 }
 
-        /*if (!trazi.equals("")){
+        if (!trazi.equals("")){
             int uspesno = 0;
             uspesno += Pretraga(proizvodiMuski);
             uspesno += Pretraga(proizvodiZenski);
@@ -296,7 +297,7 @@ public class StartWindowLogUController implements Initializable {
                 root.setSpacing(10);
                 root.setPadding(new Insets(10));
             }
-        }*/
+        }
 
         }
 }

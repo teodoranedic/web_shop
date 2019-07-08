@@ -188,6 +188,7 @@ public class StartWindowController implements Initializable {
                     komboBoja = "";
                     komboMuskarci = "";
                     komboZene = "";
+                    trazi = "";
                 }
             }
         scrollPane.setContent(root);
@@ -299,7 +300,7 @@ public class StartWindowController implements Initializable {
             izlistavanje();
         }
 
-        /*if (!trazi.equals("")){
+        if (!trazi.equals("")){
             int uspesno = 0;
             uspesno += Pretraga(proizvodiMuski);
             uspesno += Pretraga(proizvodiZenski);
@@ -309,7 +310,7 @@ public class StartWindowController implements Initializable {
                 root.setSpacing(10);
                 root.setPadding(new Insets(10));
             }
-        }*/
+        }
 
     }
     }

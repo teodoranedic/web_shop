@@ -15,7 +15,7 @@
             <font>
                 <Font name="Verdana Bold" size="18.0" />
             </font></Label>
-        <Button layoutX="416.0" layoutY="14.0" mnemonicParsing="false" onAction="#ChangeProfileButtonPushed" text="Izmena Profila" />
+        <Button layoutX="416.0" layoutY="14.0" mnemonicParsing="false" onAction="#ChangeProfileButtonPushed" text="Prikaz Profila" />
         <Button layoutX="516.0" layoutY="14.0" mnemonicParsing="false" onAction="#logOutButtonPushed" text="Odjavi se" />
         <ComboBox fx:id="male" layoutX="6.0" layoutY="84.0" onAction="#comboChanged" prefHeight="25.0" prefWidth="90.0" promptText="Muskarci" />
         <ComboBox fx:id="sort" layoutX="180.0" layoutY="84.0" onAction="#comboChanged" prefHeight="25.0" prefWidth="84.0" promptText="Sortiraj" />

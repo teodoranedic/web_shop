@@ -50,7 +50,16 @@ public class ChangeProfileController implements Initializable {
     private TextField karticaText;
 
 
-
+    @FXML
+    void istorijaKupovinePushed(ActionEvent event) throws IOException {
+        //***** TO DO!! ANDJA
+        Parent registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/StartWindowLoggedUser.fxml"));
+        Scene registrovanjeScene = new Scene(registrovanjeParent);
+        //This line gets the Stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(registrovanjeScene);
+        window.show();
+    }
     @FXML
     void nazadButtonPushed(ActionEvent event) throws IOException {
         Parent registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/StartWindowLoggedUser.fxml"));
