@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: papayawhip;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.StartWindowController">
+<AnchorPane prefHeight="434.0" prefWidth="625.0" style="-fx-background-color: papayawhip;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.StartWindowController">
    <children>
       <Label layoutX="45.0" layoutY="1.0" prefHeight="52.0" prefWidth="283.0" text="          G L O B U S" textFill="#1e0e14">
          <font>
@@ -17,12 +17,12 @@
          </font></Label>
       <Button layoutX="416.0" layoutY="14.0" mnemonicParsing="false" onAction="#logButtonPushed" text="Logovanje" />
       <Button layoutX="502.0" layoutY="14.0" mnemonicParsing="false" onAction="#signUpButtonPushed" text="Registracija" />
-      <ComboBox fx:id="male" layoutX="6.0" layoutY="84.0" onAction="#comboChanged" prefHeight="25.0" prefWidth="90.0" promptText="Muskarci" />
-      <ComboBox fx:id="sort" layoutX="180.0" layoutY="84.0" onAction="#comboChanged" prefHeight="25.0" prefWidth="84.0" promptText="Sortiraj" />
-      <ComboBox fx:id="color" layoutX="271.0" layoutY="84.0" onAction="#comboChanged" prefHeight="25.0" prefWidth="77.0" promptText="boja" />
-      <TextField fx:id="search" layoutX="384.0" layoutY="56.0" prefHeight="25.0" prefWidth="114.0" />
-      <Button fx:id="searchButton" layoutX="498.0" layoutY="56.0" mnemonicParsing="false" onAction="#searchButtonPushed" text="Pretrazi" />
-      <ScrollPane fx:id="scrollPane" layoutX="29.0" layoutY="116.0" prefHeight="235.0" prefWidth="431.0">
+      <ComboBox fx:id="male" layoutX="7.0" layoutY="109.0" onAction="#comboChanged" prefHeight="31.0" prefWidth="114.0" promptText="Muskarci" />
+      <ComboBox fx:id="sort" layoutX="210.0" layoutY="109.0" onAction="#comboChanged" prefHeight="31.0" prefWidth="107.0" promptText="Sortiraj" />
+      <ComboBox fx:id="color" layoutX="317.0" layoutY="109.0" onAction="#comboChanged" prefHeight="31.0" prefWidth="89.0" promptText="boja" />
+      <TextField fx:id="search" layoutX="375.0" layoutY="56.0" prefHeight="25.0" prefWidth="114.0" />
+      <Button fx:id="searchButton" layoutX="489.0" layoutY="56.0" mnemonicParsing="false" onAction="#searchButtonPushed" text="Pretrazi" />
+      <ScrollPane fx:id="scrollPane" layoutX="30.0" layoutY="152.0" prefHeight="235.0" prefWidth="431.0">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="246.0" prefWidth="412.0">
                <children>
@@ -30,27 +30,23 @@
                </children></AnchorPane>
         </content>
       </ScrollPane>
-      <ImageView fitHeight="32.0" fitWidth="37.0" layoutX="566.0" layoutY="52.0" onMouseClicked="#ShopCartClicked" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="/icons/cart.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="76.0" fitWidth="145.0" layoutX="487.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="76.0" fitWidth="145.0" layoutX="487.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="/icons/sandro.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="70.0" fitWidth="145.0" layoutX="489.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="70.0" fitWidth="145.0" layoutX="489.0" layoutY="235.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="/icons/tomFord.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="70.0" fitWidth="131.0" layoutX="489.0" layoutY="281.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="70.0" fitWidth="131.0" layoutX="489.0" layoutY="317.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="/icons/rimova.jpg" />
          </image>
       </ImageView>
-      <ComboBox fx:id="female" layoutX="103.0" layoutY="84.0" onAction="#comboChanged" prefHeight="25.0" prefWidth="71.0" promptText="Zene" />
-      <ComboBox fx:id="price" layoutX="353.0" layoutY="84.0" onAction="#comboChanged" prefHeight="25.0" prefWidth="107.0" promptText="raspon cene" />
+      <ComboBox fx:id="female" layoutX="121.0" layoutY="109.0" onAction="#comboChanged" prefHeight="31.0" prefWidth="89.0" promptText="Zene" />
+      <ComboBox fx:id="price" layoutX="404.0" layoutY="109.0" onAction="#comboChanged" prefHeight="31.0" prefWidth="114.0" promptText="raspon cene" />
+      <Button fx:id="korpaa" layoutX="559.0" layoutY="56.0" mnemonicParsing="false" onAction="#ShopCartClicked" prefHeight="31.0" prefWidth="57.0" text="andja" />
    </children>
 </AnchorPane>

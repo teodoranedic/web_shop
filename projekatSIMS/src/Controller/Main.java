@@ -89,6 +89,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/View/StartWindow.fxml"));
         primaryStage.setTitle("GlobusApp");
         primaryStage.getIcons().add(new Image("/icons/AppIcon.png"));
+        //korpaa.getIcons().add(new Image("/icons/AppIcon.png")); ovo negde treba da dodam
         primaryStage.setScene(new Scene(root, 700, 400));
         primaryStage.show();
 
