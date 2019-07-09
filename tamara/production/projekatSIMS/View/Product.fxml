@@ -22,7 +22,7 @@
       <Label fx:id="cenaLabela" layoutX="344.0" layoutY="73.0" prefHeight="21.0" prefWidth="102.0" text=" " />
       <ScrollPane fx:id="scrollPane" layoutX="15.0" layoutY="53.0" prefHeight="234.0" prefWidth="291.0">
         <content>
-          <AnchorPane fx:id="imagePane" minHeight="0.0" minWidth="0.0" prefHeight="346.0" prefWidth="442.0" />
+          <AnchorPane fx:id="imagePane" minHeight="0.0" minWidth="0.0" prefHeight="481.0" prefWidth="499.0" />
         </content>
       </ScrollPane>
       <Label fx:id="textOpis" layoutX="27.0" layoutY="295.0" prefHeight="70.0" prefWidth="230.0" text=" " />
