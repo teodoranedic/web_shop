@@ -15,7 +15,7 @@ public class NazivKomparator implements Comparator<Proizvod> {
 
     @Override
     public int compare(Proizvod o1, Proizvod o2) {
-        if (this.parametar.equals("rastuce"))
+        if (this.parametar.equals("naziv rastuce"))
         {
             return o1.getNaziv().compareTo(o2.getNaziv());
         }

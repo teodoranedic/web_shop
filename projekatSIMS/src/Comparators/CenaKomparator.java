@@ -16,7 +16,7 @@ public class CenaKomparator implements Comparator<Proizvod> {
 
     @Override
     public int compare(Proizvod o1, Proizvod o2) {
-        if (this.parametar.equals("rastuce"))
+        if (this.parametar.equals("cena rastuce"))
         {
             double cena1 = o1.getStavkaCenovnika();
             double cena2 = o2.getStavkaCenovnika();

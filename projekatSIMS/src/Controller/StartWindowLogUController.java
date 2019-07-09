@@ -1,5 +1,7 @@
 package Controller;
 
+import Comparators.CenaKomparator;
+import Comparators.NazivKomparator;
 import Model.Boja;
 import Model.Kategorija;
 import Model.Proizvod;
@@ -23,6 +25,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -113,6 +117,9 @@ public class StartWindowLogUController implements Initializable {
                 if (price.getValue()!=null) {
                         komboCena = price.getValue();
                 }
+                if (sort.getValue()!= null) {
+                        komboSort = sort.getValue();
+                }
 
         }
         @FXML
@@ -143,23 +150,15 @@ public class StartWindowLogUController implements Initializable {
 
         }
 
-        public void ispisProizvoda(HashMap<String,Proizvod> hm, int reset){
-                if (hm.isEmpty()){
-                        root.getChildren().clear();
-                        root.getChildren().add(message);
-                        root.setSpacing(10);
-                        root.setPadding(new Insets(10));
-
-                }
-
-                for (String s : hm.keySet()) {
-                        Image image = new Image(s);
+        public void ispisiSortirano(ArrayList<Proizvod> am, int reset){
+                for (Proizvod p : am) {
+                        Image image = new Image(p.getSlika());
                         ImageView view = new ImageView(image);
 
-                        // TODO: DODATI POSLE OVO U SVE FJE KOJR PRIKAZUJU SLIKE
+
                         view.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                                 // na klik proizvoda setuje se trenutni proizvod i prelazi se na scenu za prikaz proizvoda
-                                Main.trenutniProizvod = hm.get(s);
+                                Main.trenutniProizvod = p;
 
                                 Parent proizvodParent = null;
                                 try {
@@ -180,17 +179,99 @@ public class StartWindowLogUController implements Initializable {
                         root.getChildren().add(view);
                         root.setSpacing(10);
                         root.setPadding(new Insets(10));
-                        if (reset!=0) {
+                        if (reset != 0) {
                                 komboCena = "";
                                 komboBoja = "";
                                 komboMuskarci = "";
                                 komboZene = "";
                                 trazi = "";
+                                komboSort = "";
                         }
                 }
                 scrollPane.setContent(root);
                 scrollPane.setPannable(true);
 
+        }
+        public void prebaciUArray(ArrayList<Proizvod> am,HashMap<String, Proizvod> hm) {
+                for (Proizvod p:hm.values()) {
+                        am.add(p);
+                }
+                hm.clear();
+        }
+
+        public void ispisProizvoda(HashMap<String,Proizvod> hm, int reset){
+                if (hm.isEmpty()){
+                        root.getChildren().clear();
+                        root.getChildren().add(message);
+                        root.setSpacing(10);
+                        root.setPadding(new Insets(10));
+                }
+
+                if (komboSort.equals("cena opadajuce")) {
+                        ArrayList<Proizvod> listaZaSortiranje = new ArrayList<>();
+                        prebaciUArray(listaZaSortiranje,hm);
+                        Collections.sort(listaZaSortiranje, new CenaKomparator("cena opadajuce"));
+                        ispisiSortirano(listaZaSortiranje,1);
+                }
+                else if (komboSort.equals("cena rastuce")) {
+                        ArrayList<Proizvod> listaZaSortiranje = new ArrayList<>();
+                        prebaciUArray(listaZaSortiranje,hm);
+                        Collections.sort(listaZaSortiranje, new CenaKomparator("cena rastuce"));
+                        ispisiSortirano(listaZaSortiranje,1);
+                }
+                else if (komboSort.equals("naziv rastuce")) {
+                        ArrayList<Proizvod> listaZaSortiranje = new ArrayList<>();
+                        prebaciUArray(listaZaSortiranje,hm);
+                        Collections.sort(listaZaSortiranje, new NazivKomparator("naziv rastuce"));
+                        ispisiSortirano(listaZaSortiranje,1);
+                }
+                else if (komboSort.equals("naziv opadajuce")) {
+                        ArrayList<Proizvod> listaZaSortiranje = new ArrayList<>();
+                        prebaciUArray(listaZaSortiranje,hm);
+                        Collections.sort(listaZaSortiranje, new NazivKomparator("naziv opadajuce"));
+                        ispisiSortirano(listaZaSortiranje,1);
+                }
+                else {
+                        for (String s : hm.keySet()) {
+                                Image image = new Image(s);
+                                ImageView view = new ImageView(image);
+
+
+                                view.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                                        // na klik proizvoda setuje se trenutni proizvod i prelazi se na scenu za prikaz proizvoda
+                                        Main.trenutniProizvod = hm.get(s);
+
+                                        Parent proizvodParent = null;
+                                        try {
+                                                proizvodParent = FXMLLoader.load(getClass().getResource("/View/Product.fxml"));
+                                        } catch (IOException e) {
+                                                e.printStackTrace();
+                                        }
+                                        Scene proizvodScene = new Scene(proizvodParent);
+
+                                        //This line gets the Stage information
+                                        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                                        window.setScene(proizvodScene);
+                                        window.show();
+
+                                        event.consume();
+                                });
+                                root.getChildren().add(view);
+                                root.setSpacing(10);
+                                root.setPadding(new Insets(10));
+                                if (reset != 0) {
+                                        komboCena = "";
+                                        komboBoja = "";
+                                        komboMuskarci = "";
+                                        komboZene = "";
+                                        trazi = "";
+                                        komboSort = "";
+                                }
+                        }
+                        scrollPane.setContent(root);
+                        scrollPane.setPannable(true);
+                }
         };
         HashMap<String, Proizvod> modifikovanaZene = new HashMap<String, Proizvod>();
         HashMap<String, Proizvod> modifikovanaMuskarci = new HashMap<String, Proizvod>();
@@ -290,13 +371,13 @@ public class StartWindowLogUController implements Initializable {
                 sort.setItems(sortList);
                 price.setItems(priceList);
 
-                if (komboZene.equals("") && komboMuskarci.equals("") && komboBoja.equals("") && komboCena.equals("") && search.getText().equals("")) {
+                if (komboZene.equals("") && komboMuskarci.equals("") && komboBoja.equals("") && komboCena.equals("") && search.getText().equals("") && komboSort.equals("")) {
                         ispisProizvoda(proizvodiMuski, 0);
                         ispisProizvoda(proizvodiZenski, 0);
                 }
 
 
-                if (komboZene!="" || komboMuskarci!="" || komboBoja!="" || komboCena!="") {
+                if (komboZene!="" || komboMuskarci!="" || komboBoja!="" || komboCena!="" || komboSort!="") {
                         izlistavanje();
                 }
 
