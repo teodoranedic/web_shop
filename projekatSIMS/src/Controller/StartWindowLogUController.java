@@ -129,7 +129,17 @@ public class StartWindowLogUController implements Initializable {
         }
 
         @FXML
-        public void ShopCartClicked() {
+        public void ShopCartClicked(ActionEvent event) throws IOException ,IOException {
+                Parent korpaParent = FXMLLoader.load(getClass().getResource("/View/Cart.fxml"));
+                komboBoja = ""; komboCena = ""; komboZene= ""; komboMuskarci = ""; komboSort = ""; trazi="";
+                Scene korpaScene = new Scene(korpaParent);
+
+                //This line gets the Stage information
+                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+                window.setScene(korpaScene);
+                window.show();
+
 
         }
 
@@ -228,6 +238,9 @@ public class StartWindowLogUController implements Initializable {
                                 if (min <= p.getStavkaCenovnika() && p.getStavkaCenovnika() <= max) {
                                         modifikovana.put(p.getSlika(), p);
                                 }
+                        }
+                        else if(komboBoja.equals("")&& komboCena.equals("")){
+                                modifikovana.put(p.getSlika(), p);
                         }
 
                 }

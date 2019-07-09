@@ -6,15 +6,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Order">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.OrderController">
     <children>
-        <TextField layoutX="149.0" layoutY="69.0" prefHeight="0.0" prefWidth="187.0" />
-        <TextField layoutX="149.0" layoutY="111.0" />
-        <TextField layoutX="149.0" layoutY="150.0" />
-        <TextField layoutX="149.0" layoutY="194.0" />
-        <TextField layoutX="149.0" layoutY="287.0" />
-        <TextField layoutX="149.0" layoutY="243.0" />
+        <TextField fx:id="imeTekst" layoutX="149.0" layoutY="69.0" prefHeight="0.0" prefWidth="187.0" />
+        <TextField fx:id="prezimeTekst" layoutX="149.0" layoutY="111.0" />
+        <TextField fx:id="adresaTekst" layoutX="149.0" layoutY="150.0" />
+        <TextField fx:id="brTelTekst" layoutX="149.0" layoutY="194.0" />
+        <TextField fx:id="brKarticeTekst" layoutX="149.0" layoutY="287.0" />
+        <TextField fx:id="emailTekst" layoutX="149.0" layoutY="243.0" />
         <Label layoutX="99.0" layoutY="74.0" text="Ime:" />
         <Label layoutX="71.0" layoutY="116.0" text="Prezime:" />
         <Label layoutX="75.0" layoutY="155.0" text="Adresa:" />
@@ -22,10 +21,9 @@
         <Label layoutX="70.0" layoutY="222.0" />
         <Label layoutX="77.0" layoutY="248.0" text="E-mail:" />
         <Label layoutX="50.0" layoutY="292.0" text="Broj kartice:" />
-        <Button layoutX="26.0" layoutY="27.0" mnemonicParsing="false" text="Nazad" />
-        <Button layoutX="491.0" layoutY="327.0" mnemonicParsing="false" text="Poruči" />
+        <Button layoutX="26.0" layoutY="27.0" mnemonicParsing="false" onAction="#backButtonPushed" text="Nazad" />
+        <Button layoutX="491.0" layoutY="327.0" mnemonicParsing="false" onAction="#poruciButtonPushed" text="Poruči" />
         <Label layoutX="164.0" layoutY="32.0" />
         <Label layoutX="149.0" layoutY="32.0" prefHeight="21.0" prefWidth="262.0" />
     </children>
 </AnchorPane>
-

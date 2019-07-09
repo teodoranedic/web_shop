@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.HistoryController">
+   <children>
+      <Button layoutX="36.0" layoutY="36.0" mnemonicParsing="false" onAction="#backButtonPushed" text="Nazad" />
+      <Label fx:id="obavestenjeTekst" layoutX="35.0" layoutY="93.0" prefHeight="21.0" prefWidth="178.0" />
+      <ScrollPane fx:id="scrollPane" layoutY="151.0" prefHeight="249.0" prefWidth="606.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <VBox fx:id="root11" prefHeight="241.0" prefWidth="291.0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+      <VBox fx:id="root12" layoutX="295.0" layoutY="149.0" prefHeight="249.0" prefWidth="271.0" />
+   </children>
+</AnchorPane>

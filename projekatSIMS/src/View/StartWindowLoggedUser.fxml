@@ -30,11 +30,6 @@
                     </children></AnchorPane>
             </content>
         </ScrollPane>
-        <ImageView fitHeight="32.0" fitWidth="37.0" layoutX="566.0" layoutY="52.0" onMouseClicked="#ShopCartClicked" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="/icons/cart.png" />
-            </image>
-        </ImageView>
         <ImageView fitHeight="76.0" fitWidth="145.0" layoutX="487.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="/icons/sandro.png" />
@@ -53,5 +48,11 @@
         <ComboBox fx:id="female" layoutX="103.0" layoutY="84.0" onAction="#comboChanged" prefHeight="25.0" prefWidth="71.0" promptText="Zene" />
         <ComboBox fx:id="price" layoutX="353.0" layoutY="84.0" onAction="#comboChanged" prefHeight="25.0" prefWidth="107.0" promptText="raspon cene" />
       <Button fx:id="searchF" layoutX="472.0" layoutY="84.0" mnemonicParsing="false" onAction="#nadjiClicked" text="Nadji" />
+      <Button layoutX="568.0" layoutY="56.0" mnemonicParsing="false" onAction="#ShopCartClicked" prefHeight="31.0" prefWidth="28.0" />
+      <ImageView disable="true" fitHeight="31.0" fitWidth="28.0" layoutX="569.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="/icons/cart.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

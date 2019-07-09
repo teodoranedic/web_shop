@@ -242,6 +242,9 @@ public class StartWindowController implements Initializable {
                         modifikovana.put(p.getSlika(), p);
                     }
                 }
+                else if(komboBoja.equals("")&& komboCena.equals("")){
+                    modifikovana.put(p.getSlika(), p);
+                }
 
             }
             //ispisProizvoda(modifikovana,1);

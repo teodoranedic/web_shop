@@ -47,7 +47,12 @@
       </ImageView>
       <ComboBox fx:id="female" layoutX="110.0" layoutY="112.0" onAction="#comboChanged" prefHeight="25.0" prefWidth="77.0" promptText="Zene" />
       <ComboBox fx:id="price" layoutX="366.0" layoutY="112.0" onAction="#comboChanged" prefHeight="25.0" prefWidth="114.0" promptText="raspon cene" />
-      <Button fx:id="korpaa" layoutX="559.0" layoutY="56.0" mnemonicParsing="false" onAction="#ShopCartClicked" prefHeight="31.0" prefWidth="57.0" text="andja" />
+      <Button fx:id="korpaa" layoutX="559.0" layoutY="56.0" mnemonicParsing="false" onAction="#ShopCartClicked" prefHeight="31.0" prefWidth="32.0" />
       <Button fx:id="searchF" layoutX="487.0" layoutY="112.0" mnemonicParsing="false" onAction="#nadjiClicked" text="Nadji" />
+      <ImageView disable="true" fitHeight="31.0" fitWidth="34.0" layoutX="562.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="347.0" AnchorPane.leftAnchor="562.0" AnchorPane.rightAnchor="37.75257682800293" AnchorPane.topAnchor="56.0">
+         <image>
+            <Image url="/icons/cart.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

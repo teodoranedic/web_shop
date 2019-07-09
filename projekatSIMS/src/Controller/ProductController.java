@@ -49,7 +49,7 @@ public class ProductController implements Initializable {
     private ScrollPane scrollPane;
 
     @FXML
-    private TextField kolicinaText;
+    public TextField kolicinaText;
 
     @FXML
     private Label cenaLabela;
@@ -148,7 +148,6 @@ public class ProductController implements Initializable {
 
             //This line gets the Stage information
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
             window.setScene(registrovanjeScene);
             window.show();
         }
