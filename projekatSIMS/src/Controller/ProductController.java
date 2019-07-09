@@ -72,8 +72,9 @@ public class ProductController implements Initializable {
             p.setSifra(Main.trenutniProizvod.getSifra());
             p.setStavkaCenovnika(Main.trenutniProizvod.getStavkaCenovnika());
             p.setSlika(Main.trenutniProizvod.getSlika());
+            odabranaKolicina = Integer.parseInt(kolicinaText.getText());
 
-            if (trenutniKorisnik != null && trenutniKorisnik.getKorisnickoIme() != null)
+            if (trenutniKorisnik != null)
                 Main.trenutniKorisnik.getKorpa().dodajProizvod(p, odabranaKolicina);
             else
                 anonimnaKorpa.dodajProizvod(p, odabranaKolicina);

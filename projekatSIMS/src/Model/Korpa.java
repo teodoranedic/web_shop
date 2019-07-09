@@ -15,7 +15,7 @@ public class Korpa {
    }
 
    public HashMap<Proizvod, Integer> getProizvodi() {
-      return proizvodi;
+      return this.proizvodi;
    }
 
    public void setProizvodi(HashMap<Proizvod, Integer> proizvodi) {
@@ -25,4 +25,6 @@ public class Korpa {
    public void dodajProizvod(Proizvod p, int kolicina){
       proizvodi.put(p, kolicina);
    }
+
+
 }

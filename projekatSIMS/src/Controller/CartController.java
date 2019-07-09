@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Proizvod;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,11 +22,18 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class CartController implements Initializable{
 
 
+    private HashMap<Proizvod, TextField> poljaKolicine = new HashMap<Proizvod, TextField>();
+    private double ukupno = 0;
+
+    @FXML
+    private Label ukupnoLabela;
     @FXML
     private Label tekst;    //to da ce pisati korpa je prazna ili vasa korpa
     @FXML
@@ -43,28 +51,84 @@ public class CartController implements Initializable{
     @FXML
 
     private ScrollPane scrollPane;
-    @FXML
-    private Label ukupno;   //ukupno nisam izracunala
 
 
-    public void orderButtonPushed(ActionEvent event) throws IOException, IOException {
 
-        if (Main.trenutniKorisnik.getKorpa().getProizvodi().size() != 0 || Main.anonimnaKorpa.getProizvodi().size() != 0)
+    public void promeniKolicinu()
+    {
+        if (Main.trenutniKorisnik != null)
         {
-            Parent porudzbinaParent = FXMLLoader.load(getClass().getResource("/View/Order.fxml"));
-            Scene porudzbinaScene = new Scene(porudzbinaParent);
-            //This line gets the Stage information
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-            window.setScene(porudzbinaScene);
-            window.show();
+            for (Proizvod p : poljaKolicine.keySet())
+            {
+                Main.trenutniKorisnik.getKorpa().getProizvodi().put(p, Integer.parseInt(poljaKolicine.get(p).getText()));
+            }
         }
+        else
+        {
+            for (Proizvod p : poljaKolicine.keySet())
+            {
+                Main.anonimnaKorpa.getProizvodi().put(p, Integer.parseInt(poljaKolicine.get(p).getText()));
+            }
+        }
+
+    }
+    public void orderButtonPushed(ActionEvent event) throws IOException, IOException {
+        promeniKolicinu();
+        if (Main.trenutniKorisnik != null)
+        {
+            if (Main.trenutniKorisnik.getKorpa().getProizvodi().size() != 0)
+            {
+                Parent porudzbinaParent = FXMLLoader.load(getClass().getResource("/View/Order.fxml"));
+                Scene porudzbinaScene = new Scene(porudzbinaParent);
+                //This line gets the Stage information
+                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+                window.setScene(porudzbinaScene);
+                window.show();
+            }
+        }
+        else
+        {
+            if (Main.anonimnaKorpa.getProizvodi().size() != 0)
+            {
+                Parent porudzbinaParent = FXMLLoader.load(getClass().getResource("/View/Order.fxml"));
+                Scene porudzbinaScene = new Scene(porudzbinaParent);
+                //This line gets the Stage information
+                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+                window.setScene(porudzbinaScene);
+                window.show();
+            }
+        }
+
         //ukoliko nema proizvoda dugme nece reagovati
     }
 
+    @FXML
+    public void izbaciButtonPushed (ActionEvent event)
+    {
+        if (Main.trenutniKorisnik != null)
+            Main.trenutniKorisnik.getKorpa().getProizvodi().remove(Main.trenutniProizvod);
+        else
+            Main.anonimnaKorpa.getProizvodi().remove(Main.trenutniProizvod);
+
+        Parent proizvodParent = null;
+        try {
+            proizvodParent = FXMLLoader.load(getClass().getResource("/View/Cart.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene proizvodScene = new Scene(proizvodParent);
+
+        //This line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        window.setScene(proizvodScene);
+        window.show();
+    }
     //da proverim jel ide na nazad button i jel  prazni korpu kod ide na nazad
     @FXML
     public void backButtonPushed(ActionEvent event) throws IOException, IOException {
 
+        promeniKolicinu();
         if(Main.trenutniKorisnik == null || Main.trenutniKorisnik.getKorisnickoIme() == null) {
             Parent registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/StartWindow.fxml"));
 
@@ -92,13 +156,14 @@ public class CartController implements Initializable{
 
         for (java.util.Map.Entry<Model.Proizvod,Integer> s : proizvodi.entrySet())
         {
-
+            ukupno += s.getKey().getStavkaCenovnika() * s.getValue();
             Image image = new Image(s.getKey().getSlika());
             ImageView view = new ImageView(image);
             view.setFitHeight(160);
             view.setFitWidth(90);
             Label cen = new Label(s.getKey().getStavkaCenovnika()+"\n");
             TextField t = new TextField(s.getValue().toString());
+            poljaKolicine.put(s.getKey(), t);
 
             root.getChildren().add(view);
             root1.getChildren().add(cen);
@@ -111,6 +176,12 @@ public class CartController implements Initializable{
             root1.setPadding(new Insets(10));
             root2.setSpacing(160);
             root2.setPadding(new Insets(10));
+
+            view.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                // na klik proizvoda setuje se trenutni proizvod i prelazi se na scenu za prikaz proizvoda
+                Main.trenutniProizvod = s.getKey();
+                event.consume();
+            });
         }
         scrollPane.setContent(root);
         scrollPane.setContent(root1);
@@ -118,25 +189,35 @@ public class CartController implements Initializable{
         scrollPane.setContent(root3);
 
         scrollPane.setPannable(true);
+
     };
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if(Main.trenutniKorisnik.getKorpa().getProizvodi().size()!=0)
+        if (Main.trenutniKorisnik != null)
         {
-            tekst.setText("Vasa korpa: ");
-            ispisiProizvodeKorpe(Main.trenutniKorisnik.getKupljeniProizvodi());
+            if(Main.trenutniKorisnik.getKorpa().getProizvodi().size()!=0)
+            {
+                tekst.setText("Vasa korpa: ");
+                ispisiProizvodeKorpe(Main.trenutniKorisnik.getKorpa().getProizvodi());
+                ukupnoLabela.setText(""+ukupno);
+            }
+            else
+                tekst.setText("Vasa korpa je prazna");
+        }
+        else
+        {
+            if(Main.anonimnaKorpa.getProizvodi().size()!=0)
+            {
+                tekst.setText("Vasa korpa: ");
+                ispisiProizvodeKorpe(Main.anonimnaKorpa.getProizvodi());
+                ukupnoLabela.setText(""+ukupno);
+            }
+            else
+                tekst.setText("Vasa korpa je prazna");
+        }
 
-        }
-        else if(Main.anonimnaKorpa.getProizvodi().size()!=0)
-        {
-            tekst.setText("Vasa korpa: ");
-            ispisiProizvodeKorpe(Main.anonimnaKorpa.getProizvodi());
-        }
-        else{
-            tekst.setText("Vasa korpa je prazna");
-        }
     }
 }
 

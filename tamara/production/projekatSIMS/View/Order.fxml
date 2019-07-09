@@ -25,5 +25,6 @@
         <Button layoutX="491.0" layoutY="327.0" mnemonicParsing="false" onAction="#poruciButtonPushed" text="Poruči" />
         <Label layoutX="164.0" layoutY="32.0" />
         <Label layoutX="149.0" layoutY="32.0" prefHeight="21.0" prefWidth="262.0" />
+      <Label fx:id="porukaLabela" layoutX="203.0" layoutY="31.0" />
     </children>
 </AnchorPane>
