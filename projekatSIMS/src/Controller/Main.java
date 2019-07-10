@@ -55,10 +55,6 @@ public class Main extends Application {
         }
 
 
-        /*for (String p:proizvodi.keySet()) {
-            System.out.println(p);
-        }*/
-
         Parent root = FXMLLoader.load(getClass().getResource("/View/StartWindow.fxml"));
         primaryStage.setTitle("GlobusApp");
         primaryStage.getIcons().add(new Image("/icons/AppIcon.png"));

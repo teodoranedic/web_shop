@@ -101,8 +101,6 @@ public class ProductController implements Initializable {
 
     @FXML
     void setVelicina(ActionEvent event) {
-
-        System.out.println(comboVelicina.getValue());
         ArrayList<Velicina> vel = new ArrayList<Velicina>();
         for(Velicina v: Main.trenutniProizvod.getVelicina()){
             if (v.getSifra() == Integer.parseInt(comboVelicina.getValue())){
@@ -114,7 +112,6 @@ public class ProductController implements Initializable {
 
     @FXML
     void setBoja(ActionEvent event) {
-        System.out.println(comboBoja.getValue());
         ArrayList<Boja> boj = new ArrayList<Boja>();
         for(Boja b: Main.trenutniProizvod.getBoja()){
             if (b.getNaziv() == comboBoja.getValue()){

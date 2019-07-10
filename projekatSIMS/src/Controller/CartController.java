@@ -215,7 +215,6 @@ public class CartController implements Initializable, UpdateListener {
 
         if (Main.trenutniKorisnik != null)
         {
-            System.out.println(this.toString());
             Main.trenutniKorisnik.getKorpa().getPorudzbina().addListener(this);
             if(Main.trenutniKorisnik.getKorpa().getProizvodi().size()!=0)
             {
@@ -228,8 +227,6 @@ public class CartController implements Initializable, UpdateListener {
         }
         else
         {
-            System.out.println(this.toString());
-
             Main.anonimnaKorpa.getPorudzbina().addListener(this);
             if(Main.anonimnaKorpa.getProizvodi().size()!=0)
             {
@@ -251,14 +248,12 @@ public class CartController implements Initializable, UpdateListener {
             Parent porudzbinaParent = null;
             try {
                 porudzbinaParent = FXMLLoader.load(getClass().getResource("/View/Order.fxml"));
-                System.out.println("TU SMO");
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
             Scene porudzbinaScene = new Scene(porudzbinaParent);
             //This line gets the Stage information
             Stage window = (Stage) ((Node) trenutniDogadjaj.getSource()).getScene().getWindow();
-            System.out.println(window == null);
             window.setScene(porudzbinaScene);
             window.show();
 
@@ -267,15 +262,11 @@ public class CartController implements Initializable, UpdateListener {
             Parent porudzbinaParent = null;
             try {
                 porudzbinaParent = FXMLLoader.load(getClass().getResource("/View/Cart.fxml"));
-                System.out.println("TU SMO");
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
             Scene porudzbinaScene = new Scene(porudzbinaParent);
-            //This line gets the Stage information
-            System.out.println(trenutniDogadjaj == null);
             Stage window = (Stage) ((Node) trenutniDogadjaj.getSource()).getScene().getWindow();
-            System.out.println(window == null);
             window.setScene(porudzbinaScene);
             window.show();
         }
