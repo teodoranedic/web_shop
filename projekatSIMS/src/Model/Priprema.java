@@ -1,31 +1,44 @@
 package Model;
 import java.util.*;
 
-/** @pdOid b346ad77-7f75-4044-a952-ad647be38822 */
 public class Priprema extends StanjePorudzbine {
-   /** @pdOid 04cb6929-c865-484a-95e4-632d69d21fae */
+   public Priprema(Porudzbina k) {
+      super(k);
+   }
+
    public void odabranoPlacanje() {
-      // TODO: implement
+      // ako jesu onda menja stanje ako ne onda nista
+      // Prvo proveri da li je prazna lista sa proizvodima tj korpa
+
+      if(kontekst.getProizvodi().size() == 0){
+         //salje da treba da se ispise da je korpa prazna
+         kontekst.setPromena(false);
+         kontekst.osveziProzor();
+
+      }else{
+         //menja stanje
+         kontekst.setPromena(true);
+         kontekst.promeniStanje(new Placanje(kontekst));
+         kontekst.osveziProzor();
+      }
+
    }
    
-   /** @pdOid e5ec40fd-3ca1-4909-a6f0-a712af926f58 */
    public void zavrsenoPlacanje() {
-      // TODO: implement
    }
    
-   /** @pdOid 1d919ec7-1288-4b42-9998-d813633ba865 */
    public void magacionerOtpremio() {
-      // TODO: implement
    }
-   
-   /** @pdOid 16cdba53-cd70-4ab4-b2e8-6f6f1c0595fe */
+
+   @Override
+   public void povratakNazad() {
+
+   }
+
    public void entry() {
-      // TODO: implement
    }
    
-   /** @pdOid cfe75c65-4789-4977-bcee-23a9c54273a0 */
    public void exit() {
-      // TODO: implement
    }
 
 }

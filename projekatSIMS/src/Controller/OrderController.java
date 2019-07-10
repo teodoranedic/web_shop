@@ -1,5 +1,7 @@
 package Controller;
 
+import EventHandler.UpdateEvent;
+import EventHandler.UpdateListener;
 import FileHandler.KorisniciFile;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class OrderController implements Initializable {
+public class OrderController implements Initializable, UpdateListener {
     @FXML
     private TextField prezimeTekst;
 
@@ -36,6 +38,8 @@ public class OrderController implements Initializable {
 
     @FXML
     private Label porukaLabela;
+
+    public ActionEvent trenutniDogadjaj;
 
     @FXML
     public void poruciButtonPushed(ActionEvent event) throws IOException, IOException {
@@ -84,30 +88,26 @@ public class OrderController implements Initializable {
     @FXML
     public void backButtonPushed(ActionEvent event) throws IOException, IOException {
 
-            if (Main.trenutniKorisnik == null)
-            {
-                Parent registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/StartWindow.fxml"));
-                Scene registrovanjeScene = new Scene(registrovanjeParent);
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        trenutniDogadjaj = event;
 
-                window.setScene(registrovanjeScene);
-                window.show();
+
+        if (Main.trenutniKorisnik == null)
+            {
+                Main.anonimnaKorpa.getPorudzbina().PovratakNazad();
             }
             else
             {
-                Parent registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/StartWindowLoggedUser.fxml"));
-                Scene registrovanjeScene = new Scene(registrovanjeParent);
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-                window.setScene(registrovanjeScene);
-                window.show();
+             Main.trenutniKorisnik.getKorpa().getPorudzbina().PovratakNazad();
             }
+
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+
         if (Main.trenutniKorisnik != null)
         {
+            Main.trenutniKorisnik.getKorpa().getPorudzbina().addListener(this);
             if(Main.trenutniKorisnik.getKorpa().getProizvodi().size()!=0)
             {
                 prezimeTekst.setText(Main.trenutniKorisnik.getPodaciZaSlanje().getPrezime());
@@ -122,7 +122,26 @@ public class OrderController implements Initializable {
 
                 emailTekst.setText(Main.trenutniKorisnik.getMejl());
             }
+        } else {
+            Main.anonimnaKorpa.getPorudzbina().addListener(this);
         }
 
+    }
+
+    @Override
+    public void updatePerformed(UpdateEvent e) {
+        Parent porudzbinaParent = null;
+        try {
+            porudzbinaParent = FXMLLoader.load(getClass().getResource("/View/Cart.fxml"));
+            System.out.println("TU SMO");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        Scene porudzbinaScene = new Scene(porudzbinaParent);
+        //This line gets the Stage information
+        Stage window = (Stage) ((Node) trenutniDogadjaj.getSource()).getScene().getWindow();
+        System.out.println(window == null);
+        window.setScene(porudzbinaScene);
+        window.show();
     }
 }

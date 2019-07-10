@@ -3,27 +3,39 @@ import java.util.*;
 
 
 public class Korpa {
+
+
    // parovi proizvod, odabrana kolicina
-   private HashMap<Proizvod, Integer> proizvodi;
+   Porudzbina porudzbina;
+   //private HashMap<Proizvod, Integer> proizvodi;
 
    public Korpa() {
-      proizvodi = new HashMap<>();
+      porudzbina = new Porudzbina();
+      porudzbina.setTekuceStanje(new Priprema(this.porudzbina));
    }
 
    public Korpa(HashMap<Proizvod, Integer> proizvodi) {
-      this.proizvodi = proizvodi;
+      porudzbina = new Porudzbina();
+      porudzbina.setTekuceStanje(new Priprema(this.porudzbina));
+      porudzbina.setProizvodi(proizvodi);
+   }
+   public Porudzbina getPorudzbina() {
+      return porudzbina;
    }
 
+   public void setPorudzbina(Porudzbina porudzbina) {
+      this.porudzbina = porudzbina;
+   }
    public HashMap<Proizvod, Integer> getProizvodi() {
-      return this.proizvodi;
+      return porudzbina.getProizvodi();
    }
 
    public void setProizvodi(HashMap<Proizvod, Integer> proizvodi) {
-      this.proizvodi = proizvodi;
+      porudzbina.setProizvodi(proizvodi);
    }
 
    public void dodajProizvod(Proizvod p, int kolicina){
-      proizvodi.put(p, kolicina);
+      porudzbina.getProizvodi().put(p, kolicina);
    }
 
 

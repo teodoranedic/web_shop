@@ -1,5 +1,7 @@
 package Controller;
 
+import EventHandler.UpdateEvent;
+import EventHandler.UpdateListener;
 import Model.Proizvod;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class CartController implements Initializable{
+public class CartController implements Initializable, UpdateListener {
 
 
     private HashMap<Proizvod, TextField> poljaKolicine = new HashMap<Proizvod, TextField>();
@@ -36,6 +38,9 @@ public class CartController implements Initializable{
     private Label ukupnoLabela;
     @FXML
     private Label tekst;    //to da ce pisati korpa je prazna ili vasa korpa
+    @FXML
+    private Label korpaPraznaLabela;
+
     @FXML
     private Label cena;
     @FXML
@@ -52,6 +57,10 @@ public class CartController implements Initializable{
 
     private ScrollPane scrollPane;
 
+    private ActionEvent trenutniDogadjaj;
+
+
+    // IMAMO GLOBALNU ANONIMNU KORPU I REGISTROVANOG PA PREKO NJEGA NJEGOVU KORPU
 
 
     public void promeniKolicinu()
@@ -73,9 +82,17 @@ public class CartController implements Initializable{
 
     }
     public void orderButtonPushed(ActionEvent event) throws IOException, IOException {
+        trenutniDogadjaj = event;
+
         promeniKolicinu();
+
         if (Main.trenutniKorisnik != null)
         {
+            Main.trenutniKorisnik.getKorpa().getPorudzbina().OdabranoPlacanje();
+        }else{
+            Main.anonimnaKorpa.getPorudzbina().OdabranoPlacanje();
+        }
+            /*
             if (Main.trenutniKorisnik.getKorpa().getProizvodi().size() != 0)
             {
                 Parent porudzbinaParent = FXMLLoader.load(getClass().getResource("/View/Order.fxml"));
@@ -98,7 +115,7 @@ public class CartController implements Initializable{
                 window.show();
             }
         }
-
+        */
         //ukoliko nema proizvoda dugme nece reagovati
     }
 
@@ -195,8 +212,11 @@ public class CartController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         if (Main.trenutniKorisnik != null)
         {
+            System.out.println(this.toString());
+            Main.trenutniKorisnik.getKorpa().getPorudzbina().addListener(this);
             if(Main.trenutniKorisnik.getKorpa().getProizvodi().size()!=0)
             {
                 tekst.setText("Vasa korpa: ");
@@ -208,6 +228,9 @@ public class CartController implements Initializable{
         }
         else
         {
+            System.out.println(this.toString());
+
+            Main.anonimnaKorpa.getPorudzbina().addListener(this);
             if(Main.anonimnaKorpa.getProizvodi().size()!=0)
             {
                 tekst.setText("Vasa korpa: ");
@@ -218,6 +241,44 @@ public class CartController implements Initializable{
                 tekst.setText("Vasa korpa je prazna");
         }
 
+    }
+
+    @Override
+    public void updatePerformed(UpdateEvent e) {
+        // TODO: prelazak na sledece stanje
+        if(e.isPromena()) {
+
+            Parent porudzbinaParent = null;
+            try {
+                porudzbinaParent = FXMLLoader.load(getClass().getResource("/View/Order.fxml"));
+                System.out.println("TU SMO");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            Scene porudzbinaScene = new Scene(porudzbinaParent);
+            //This line gets the Stage information
+            Stage window = (Stage) ((Node) trenutniDogadjaj.getSource()).getScene().getWindow();
+            System.out.println(window == null);
+            window.setScene(porudzbinaScene);
+            window.show();
+
+        }else{
+
+            Parent porudzbinaParent = null;
+            try {
+                porudzbinaParent = FXMLLoader.load(getClass().getResource("/View/Cart.fxml"));
+                System.out.println("TU SMO");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            Scene porudzbinaScene = new Scene(porudzbinaParent);
+            //This line gets the Stage information
+            System.out.println(trenutniDogadjaj == null);
+            Stage window = (Stage) ((Node) trenutniDogadjaj.getSource()).getScene().getWindow();
+            System.out.println(window == null);
+            window.setScene(porudzbinaScene);
+            window.show();
+        }
     }
 }
 

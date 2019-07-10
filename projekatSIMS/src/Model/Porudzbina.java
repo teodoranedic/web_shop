@@ -1,18 +1,56 @@
 package Model;
+import EventHandler.UpdateEvent;
+import EventHandler.UpdateListener;
+
 import java.util.*;
 
 
 public class Porudzbina {
-
-   private StanjePorudzbine stanje;
-
+   private StanjePorudzbine tekuceStanje;
    private Date datum;
+   public PodaciZaSlanje podaciZaSlanje;
+   private HashMap<Proizvod, Integer> proizvodi = new HashMap<Proizvod, Integer>();
+   private boolean promena = false;
 
-   private NacinPlacanja nacinPlacanja;
+   public boolean isPromena() {
+      return promena;
+   }
 
-   public PodaciZaSlanje[] podaciZaSlanje;
+   public void setPromena(boolean promena) {
+      this.promena = promena;
+   }
 
-   public java.util.Collection<StanjePorudzbine> stanjePorudzbine;
+   public StanjePorudzbine getTekuceStanje() {
+      return tekuceStanje;
+   }
+
+   public void setTekuceStanje(StanjePorudzbine tekuceStanje) {
+      this.tekuceStanje = tekuceStanje;
+   }
+
+   public Date getDatum() {
+      return datum;
+   }
+
+   public void setDatum(Date datum) {
+      this.datum = datum;
+   }
+
+   public PodaciZaSlanje getPodaciZaSlanje() {
+      return podaciZaSlanje;
+   }
+
+   public void setPodaciZaSlanje(PodaciZaSlanje podaciZaSlanje) {
+      this.podaciZaSlanje = podaciZaSlanje;
+   }
+
+   public HashMap<Proizvod, Integer> getProizvodi() {
+      return proizvodi;
+   }
+
+   public void setProizvodi(HashMap<Proizvod, Integer> proizvodi) {
+      this.proizvodi = proizvodi;
+   }
 
    public int unesiPodatke() {
       // TODO: implement
@@ -41,68 +79,51 @@ public class Porudzbina {
    }
    
 
-   public int OdabranoPlacanje() {
-      // TODO: implement
-      return 0;
+   public void OdabranoPlacanje() {
+      // TODO: implement!!!!!!!!!!!!!!!!
+      tekuceStanje.odabranoPlacanje();
+
    }
    
 
    public int ZavrsenoPlacanje() {
-      // TODO: implement
+      // TODO: NE implement!!!!!!!!!!!!!!!!!! salim se
       return 0;
    }
 
    public int MagacionerOtpremio() {
-      // TODO: implement
+      // TODO:  NE implement uzivajte malo
       return 0;
    }
 
-   public int promeniStanje() {
-      // TODO: implement
-      return 0;
-   }
-   
-
-   public java.util.Collection<StanjePorudzbine> getStanjePorudzbine() {
-      if (stanjePorudzbine == null)
-         stanjePorudzbine = new java.util.HashSet<StanjePorudzbine>();
-      return stanjePorudzbine;
+   public void PovratakNazad() {
+      tekuceStanje.povratakNazad();
    }
 
-   public java.util.Iterator getIteratorStanjePorudzbine() {
-      if (stanjePorudzbine == null)
-         stanjePorudzbine = new java.util.HashSet<StanjePorudzbine>();
-      return stanjePorudzbine.iterator();
-   }
-   
-
-   public void setStanjePorudzbine(java.util.Collection<StanjePorudzbine> newStanjePorudzbine) {
-      removeAllStanjePorudzbine();
-      for (java.util.Iterator iter = newStanjePorudzbine.iterator(); iter.hasNext();)
-         addStanjePorudzbine((StanjePorudzbine)iter.next());
+   public void promeniStanje(StanjePorudzbine novoStanje) {
+      tekuceStanje.exit();
+      novoStanje.entry();
+      tekuceStanje = novoStanje;
    }
 
-   public void addStanjePorudzbine(StanjePorudzbine newStanjePorudzbine) {
-      if (newStanjePorudzbine == null)
-         return;
-      if (this.stanjePorudzbine == null)
-         this.stanjePorudzbine = new java.util.HashSet<StanjePorudzbine>();
-      if (!this.stanjePorudzbine.contains(newStanjePorudzbine))
-         this.stanjePorudzbine.add(newStanjePorudzbine);
+   private UpdateListener listeners;
+
+
+   public void addListener(UpdateListener l) {
+      listeners = l;
+   }
+   public void removeListener(UpdateListener l) {
+      listeners = null;
    }
 
-   public void removeStanjePorudzbine(StanjePorudzbine oldStanjePorudzbine) {
-      if (oldStanjePorudzbine == null)
-         return;
-      if (this.stanjePorudzbine != null)
-         if (this.stanjePorudzbine.contains(oldStanjePorudzbine))
-            this.stanjePorudzbine.remove(oldStanjePorudzbine);
-   }
-   
+   public void osveziProzor() {
+      UpdateEvent e = new UpdateEvent(this, promena);
+      //Slanje dogadjaja da se desila promena svima koji su se registrovali za pracenje promena:
 
-   public void removeAllStanjePorudzbine() {
-      if (stanjePorudzbine != null)
-         stanjePorudzbine.clear();
+      listeners.updatePerformed(e);
+
+
+      //U slucaju realnog kontrolera, ovde bi se direktno izdavale komande izlaznim uredjajima.
    }
 
 }

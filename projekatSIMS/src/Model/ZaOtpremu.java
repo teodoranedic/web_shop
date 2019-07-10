@@ -3,6 +3,10 @@ package Model;
 import java.util.*;
 
 public class ZaOtpremu extends StanjePorudzbine {
+   public ZaOtpremu(Porudzbina k) {
+      super(k);
+   }
+
    public void odabranoPlacanje() {
       // TODO: implement
    }
@@ -14,7 +18,12 @@ public class ZaOtpremu extends StanjePorudzbine {
    public void magacionerOtpremio() {
       // TODO: implement
    }
-   
+
+   @Override
+   public void povratakNazad() {
+
+   }
+
 
    public void entry() {
       // TODO: implement

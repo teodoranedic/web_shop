@@ -2,24 +2,17 @@ package Model;
 import java.util.*;
 
 public abstract class StanjePorudzbine {
-   public void odabranoPlacanje() {
-      // TODO: implement
-   }
-   
-   public void zavrsenoPlacanje() {
-      // TODO: implement
-   }
-   
-   public void magacionerOtpremio() {
-      // TODO: implement
-   }
-   
-   public void entry() {
-      // TODO: implement
-   }
-   
-   public void exit() {
-      // TODO: implement
+   protected Porudzbina kontekst;
+
+   public abstract void odabranoPlacanje();
+   public abstract void zavrsenoPlacanje();
+   public abstract void magacionerOtpremio();
+   public abstract void povratakNazad();
+   public abstract void entry();
+   public abstract void exit();
+
+   public StanjePorudzbine(Porudzbina k){
+      kontekst = k;
    }
 
 }
