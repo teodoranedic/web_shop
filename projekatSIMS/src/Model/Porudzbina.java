@@ -1,7 +1,12 @@
 package Model;
+import Controller.Main;
 import EventHandler.UpdateEvent;
+import EventHandler.UpdateEventZaOtpremu;
 import EventHandler.UpdateListener;
+import EventHandler.UpdateListenerZaOtpremu;
+import FileHandler.KorisniciFile;
 
+import java.io.FileNotFoundException;
 import java.util.*;
 
 
@@ -52,6 +57,24 @@ public class Porudzbina {
       this.proizvodi = proizvodi;
    }
 
+   public void dodajProizvodeIzKorpe() throws FileNotFoundException {
+      if (Main.trenutniKorisnik != null) {
+         for (java.util.Map.Entry<Model.Proizvod, Integer> s : Main.trenutniKorisnik.getKorpa().getProizvodi().entrySet()) {
+            Main.trenutniKorisnik.dodajProizvod(s.getKey(), s.getValue());
+         }
+         KorisniciFile.upis();
+      }
+   }
+
+   public void isprazniKorpu() {
+      if (Main.trenutniKorisnik != null) {
+         Main.trenutniKorisnik.getKorpa().getProizvodi().clear();
+      }
+      else {
+         Main.anonimnaKorpa.getProizvodi().clear();
+      }
+   }
+
    public int unesiPodatke() {
       // TODO: implement
       return 0;
@@ -86,9 +109,8 @@ public class Porudzbina {
    }
    
 
-   public int ZavrsenoPlacanje() {
-      // TODO: NE implement!!!!!!!!!!!!!!!!!! salim se
-      return 0;
+   public void ZavrsenoPlacanje() throws FileNotFoundException {
+      tekuceStanje.zavrsenoPlacanje();
    }
 
    public int MagacionerOtpremio() {
@@ -104,16 +126,26 @@ public class Porudzbina {
       tekuceStanje.exit();
       novoStanje.entry();
       tekuceStanje = novoStanje;
+      if (novoStanje.getClass() == ZaOtpremu.class) {
+         tekuceStanje = new Priprema(this);
+      }
    }
 
    private UpdateListener listeners;
-
+   private UpdateListenerZaOtpremu listenerZaOtpremu;
 
    public void addListener(UpdateListener l) {
       listeners = l;
    }
+
+   public void addListenerZaOtpremu(UpdateListenerZaOtpremu listener1) { listenerZaOtpremu = listener1;};
+
    public void removeListener(UpdateListener l) {
       listeners = null;
+   }
+   public void osvezi() {
+      UpdateEventZaOtpremu e = new UpdateEventZaOtpremu(this, promena);
+      listenerZaOtpremu.updatePerformed(e);
    }
 
    public void osveziProzor() {

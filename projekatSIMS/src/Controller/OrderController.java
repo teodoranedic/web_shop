@@ -1,7 +1,9 @@
 package Controller;
 
 import EventHandler.UpdateEvent;
+import EventHandler.UpdateEventZaOtpremu;
 import EventHandler.UpdateListener;
+import EventHandler.UpdateListenerZaOtpremu;
 import FileHandler.KorisniciFile;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class OrderController implements Initializable, UpdateListener {
+public class OrderController implements Initializable, UpdateListener, UpdateListenerZaOtpremu {
     @FXML
     private TextField prezimeTekst;
 
@@ -43,17 +45,23 @@ public class OrderController implements Initializable, UpdateListener {
 
     @FXML
     public void poruciButtonPushed(ActionEvent event) throws IOException, IOException {
+        trenutniDogadjaj = event;
         if (Main.trenutniKorisnik != null)
         {
-            for (java.util.Map.Entry<Model.Proizvod,Integer> s : Main.trenutniKorisnik.getKorpa().getProizvodi().entrySet())
+            Main.trenutniKorisnik.getKorpa().getPorudzbina().ZavrsenoPlacanje();
+
+            //TODO : prebaciti negde
+            /*for (java.util.Map.Entry<Model.Proizvod,Integer> s : Main.trenutniKorisnik.getKorpa().getProizvodi().entrySet())
             {
                 Main.trenutniKorisnik.dodajProizvod(s.getKey(),s.getValue());
-            }
-            //upis u fajl ovde
-            KorisniciFile.upis();
+            }*/
+
+
+
+            /*KorisniciFile.upis();
             Main.trenutniKorisnik.getKorpa().getProizvodi().clear();
             //obrisi korpu
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Obavestenje");
             alert.setHeaderText("Porudzbina se obradjuje.");
             alert.setContentText("Detaljne informacije dobicete putem email-a.Hvala na poverenju.");
@@ -61,7 +69,7 @@ public class OrderController implements Initializable, UpdateListener {
                 if (rs == ButtonType.OK)
                     //ovde pitam gde treba da se vrati
                     alert.close();
-            });
+            });*/
         }
         else {
             if (imeTekst.getText().equals("") || prezimeTekst.getText().equals("") || adresaTekst.getText().equals("")
@@ -71,8 +79,10 @@ public class OrderController implements Initializable, UpdateListener {
             }
             else
             {
+                Main.anonimnaKorpa.getPorudzbina().ZavrsenoPlacanje();
                 Main.anonimnaKorpa.getProizvodi().clear();
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+            /*  Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Obavestenje");
                 alert.setHeaderText("Porudzbina se obradjuje.");
                 alert.setContentText("Detaljne informacije dobicete putem email-a.Hvala na poverenju.");
@@ -80,7 +90,7 @@ public class OrderController implements Initializable, UpdateListener {
                     if (rs == ButtonType.OK)
                         //ovde pitam gde treba da se vrati
                         alert.close();
-                });
+                });*/
             }
         }
 
@@ -108,6 +118,8 @@ public class OrderController implements Initializable, UpdateListener {
         if (Main.trenutniKorisnik != null)
         {
             Main.trenutniKorisnik.getKorpa().getPorudzbina().addListener(this);
+            Main.trenutniKorisnik.getKorpa().getPorudzbina().addListenerZaOtpremu(this);
+
             if(Main.trenutniKorisnik.getKorpa().getProizvodi().size()!=0)
             {
                 prezimeTekst.setText(Main.trenutniKorisnik.getPodaciZaSlanje().getPrezime());
@@ -124,6 +136,7 @@ public class OrderController implements Initializable, UpdateListener {
             }
         } else {
             Main.anonimnaKorpa.getPorudzbina().addListener(this);
+            Main.anonimnaKorpa.getPorudzbina().addListenerZaOtpremu(this);
         }
 
     }
@@ -133,15 +146,46 @@ public class OrderController implements Initializable, UpdateListener {
         Parent porudzbinaParent = null;
         try {
             porudzbinaParent = FXMLLoader.load(getClass().getResource("/View/Cart.fxml"));
-            System.out.println("TU SMO");
         } catch (IOException ex) {
             ex.printStackTrace();
         }
         Scene porudzbinaScene = new Scene(porudzbinaParent);
         //This line gets the Stage information
         Stage window = (Stage) ((Node) trenutniDogadjaj.getSource()).getScene().getWindow();
-        System.out.println(window == null);
         window.setScene(porudzbinaScene);
         window.show();
     }
+
+    @Override
+    public void updatePerformed(UpdateEventZaOtpremu e) {
+
+        if (Main.trenutniKorisnik != null) {
+            Main.izbor = "/View/StartWindowLoggedUser.fxml";
+        }
+        else {
+            Main.izbor = "/View/StartWindow.fxml";
+        }
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Obavestenje");
+            alert.setHeaderText("Porudzbina se obradjuje.");
+            alert.setContentText("Detaljne informacije dobicete putem email-a.Hvala na poverenju.");
+            alert.showAndWait().ifPresent(rs -> {
+                if (rs == ButtonType.OK)
+                    //ovde pitam gde treba da se vrati
+                    alert.close();
+                Parent porudzbinaParent = null;
+                try {
+                    porudzbinaParent = FXMLLoader.load(getClass().getResource(Main.izbor ));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                Scene porudzbinaScene = new Scene(porudzbinaParent);
+                //This line gets the Stage information
+                Stage window = (Stage) ((Node) trenutniDogadjaj.getSource()).getScene().getWindow();
+                window.setScene(porudzbinaScene);
+                window.show();
+            });
+
+        }
+
 }

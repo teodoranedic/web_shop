@@ -24,6 +24,7 @@ public class Main extends Application {
     public static String komboBoja = "";
     public static String komboCena = "";
     public static String trazi = "";
+    public static String izbor = "";
 
     public static HashMap<String, Registrovani> korisnici = new HashMap<String, Registrovani>();
     public static HashMap<String, Proizvod> proizvodiZenski = new HashMap<String, Proizvod>();

@@ -1,4 +1,7 @@
 package Model;
+import Controller.Main;
+
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Placanje extends StanjePorudzbine {
@@ -9,10 +12,14 @@ public class Placanje extends StanjePorudzbine {
    public void odabranoPlacanje() {
    }
    
-   public void zavrsenoPlacanje() {
+   public void zavrsenoPlacanje() throws FileNotFoundException {
       // TODO: provera da li su svi uneti, ako jesu ide na stanje zaotpremu
-      // ako nisu ostaje u istom i ispisuje sva polja obavezna
-
+      if (Main.trenutniKorisnik != null) {
+         Main.trenutniKorisnik.getKorpa().getPorudzbina().dodajProizvodeIzKorpe();
+      }
+      kontekst.setPromena(true);
+      kontekst.promeniStanje(new ZaOtpremu(kontekst));
+      kontekst.osvezi();
    }
    
    public void magacionerOtpremio() {
@@ -30,7 +37,12 @@ public class Placanje extends StanjePorudzbine {
    }
    
    public void exit() {
-      // TODO: pokusaj placanje???
+      if (Main.trenutniKorisnik != null) {
+         Main.trenutniKorisnik.getKorpa().getPorudzbina().isprazniKorpu();
+      }
+      else {
+         Main.anonimnaKorpa.getPorudzbina().isprazniKorpu();
+      }
    }
 
 }

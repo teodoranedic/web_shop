@@ -1,5 +1,8 @@
 package Model;
 
+import Controller.Main;
+
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class ZaOtpremu extends StanjePorudzbine {
@@ -11,12 +14,11 @@ public class ZaOtpremu extends StanjePorudzbine {
       // TODO: implement
    }
    
-   public void zavrsenoPlacanje() {
-      // TODO: implement
+   public void zavrsenoPlacanje() throws FileNotFoundException {
    }
    
    public void magacionerOtpremio() {
-      // TODO: implement
+      // TODO: NE implement
    }
 
    @Override
