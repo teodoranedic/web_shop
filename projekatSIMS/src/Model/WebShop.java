@@ -1,4 +1,7 @@
 package Model;
+import EventHandler.*;
+
+import java.io.IOException;
 import java.util.*;
 
 
@@ -6,85 +9,123 @@ public class WebShop {
 
    private String naziv;
    private String link;
-   
+
+   private UpdateListenerZaPregledSajta updateListenerZaPregledSajta;
+   private UpdateListenerZaPregledSajtaPP updateP;
+   private UpdateListenerZaPregledProizvoda updateListenerZaPregledProizvoda;
+
    public ImaNaStanju[] association9;
-   //public Stanje trenutno stanje;
+   public Stanje tekuceStanje;
    public java.util.Collection<Korisnik> korisnik;
    public java.util.Collection<Korpa> korpa;
    public java.util.Collection<Porudzbina> porudzbina;
    public java.util.Collection<Cenovnik> cenovnik;
    public java.util.Collection<Kategorija> kategorija;
-   
 
-   public int promeniStanje(Stanje s) {
-      // TODO: implement
-      return 0;
+   private boolean promena = false;
+
+   public void addListener(UpdateListenerZaPregledSajta u){updateListenerZaPregledSajta=u;}
+   public void addListenerr(UpdateListenerZaPregledProizvoda u){updateListenerZaPregledProizvoda=u;}
+   public void addLP(UpdateListenerZaPregledSajtaPP p){updateP =p;}
+
+   public boolean isPromena() {
+      return promena;
+   }
+   public void setPromena(boolean promena) {
+      this.promena = promena;
+   }
+   public WebShop(){
+      tekuceStanje = new PregledSajta(this);
+   }
+
+   public void promeniStanje(Stanje novoStanje) {
+      tekuceStanje.exit();
+      novoStanje.entry();
+      tekuceStanje = novoStanje;
+
    }
    public void ubacivanjeUKorpu() {
       // TODO: implement
    }
    public void odabraniFilter_f_() {
-      // TODO: implement
+      // TODO: moze implement
    }
    
    public void klikNaProizvod() {
-      // TODO: implement
+      try {
+         tekuceStanje.klikNaProizvod();
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
+
+
    }
-   
+   public void vratiNaSajt(){
+      UpdateEventZaPregledSajtaPP e = new UpdateEventZaPregledSajtaPP(this, promena);
+      try {
+         updateP.updatePerformed(e);
+      } catch (IOException ex) {
+         ex.printStackTrace();
+      }
+   }
+   public void osveziProizvod() throws IOException {
+      UpdateEventZaPregledProizvoda e = new UpdateEventZaPregledProizvoda(this, promena);
+      updateListenerZaPregledProizvoda.updatePerformed(e);
+   }
 
    public void nastavakKupovine() {
-      // TODO: implement
+      tekuceStanje.nastavakKupovine();
    }
-   
-
    public void klikniNaKorpu() {
-      // TODO: implement
+      tekuceStanje.klikniNaKorpu();
    }
    
    public void potrvrdaKupovine() {
-      // TODO: implement
+      // TODO: ne implement
    }
    
    public void brisanjeProizvoda() {
-      // TODO: implement
+      // TODO: da implement
    }
    
 
    public void neodobrenaKupovina() {
-      // TODO: implement
+      // TODO: ne implement
    }
    
 
    public void izvrsenoPlacanje() {
-      // TODO: implement
+      // TODO: ne implement
    }
 
    public void odobrenaKupovina() {
-      // TODO: implement
+      // TODO: ne implement
    }
    
-   public void prikazi() {
-      // TODO: implement
+   public void prikaziKorpu() { //osvezi
+      UpdateEventZaPregledSajta e = new UpdateEventZaPregledSajta(this, promena);
+      //Slanje dogadjaja da se desila promena svima koji su se registrovali za pracenje promena:
+      updateListenerZaPregledSajta.updatePerformed(e);
    }
    
    public void dodajUKorpu() {
-      // TODO: implement
+      // TODO: moze implement
    }
    
    public void obrisi() {
-      // TODO: implement
+      // TODO: ne implement
    }
    
    public void proveriStanjeNaRacunu() {
-      // TODO: implement
+      // TODO: ne implement
    }
    
    public void posaljiRobu() {
-      // TODO: implement
+      // TODO: ne implement
    }
    
    public void isprazniKorpu() {
-      // TODO: implement
+      // TODO: ne implement
    }
    
 

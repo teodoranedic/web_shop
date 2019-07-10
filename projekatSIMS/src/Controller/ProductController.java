@@ -1,5 +1,7 @@
 package Controller;
 
+import EventHandler.UpdateEventZaPregledSajtaPP;
+import EventHandler.UpdateListenerZaPregledSajtaPP;
 import Model.Boja;
 import Model.Kategorija;
 import Model.Proizvod;
@@ -27,8 +29,8 @@ import java.util.ResourceBundle;
 
 import static Controller.Main.*;
 
-public class ProductController implements Initializable {
-
+public class ProductController implements Initializable, UpdateListenerZaPregledSajtaPP {
+    public ActionEvent trenutniDogadjaj;
     @FXML
     private Label textOpis;
 
@@ -129,30 +131,13 @@ public class ProductController implements Initializable {
 
     @FXML
     void nazadButtonPushed(ActionEvent event) throws IOException {
-        if(Main.trenutniKorisnik == null || Main.trenutniKorisnik.getKorisnickoIme() == null) {
-            Parent registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/StartWindow.fxml"));
-
-            Scene registrovanjeScene = new Scene(registrovanjeParent);
-
-            //This line gets the Stage information
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            window.setScene(registrovanjeScene);
-            window.show();
-        }else{
-            Parent registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/StartWindowLoggedUser.fxml"));
-
-            Scene registrovanjeScene = new Scene(registrovanjeParent);
-
-            //This line gets the Stage information
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(registrovanjeScene);
-            window.show();
-        }
+        trenutniDogadjaj=event;
+        webShop.nastavakKupovine();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        webShop.addLP(this);
         for (Boja b : Main.trenutniProizvod.getBoja()) {
             bojeList.add(b.getNaziv());
 
@@ -175,4 +160,22 @@ public class ProductController implements Initializable {
         scrollPane.setPannable(true);
     }
 
+    @Override
+    public void updatePerformed(UpdateEventZaPregledSajtaPP e) throws IOException {
+        if(e.isPromena()){
+            Parent registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/StartWindowLoggedUser.fxml"));
+            Scene registrovanjeScene = new Scene(registrovanjeParent);
+            Stage window = (Stage)((Node)trenutniDogadjaj.getSource()).getScene().getWindow();
+            window.setScene(registrovanjeScene);
+            window.show();
+        }
+        else{
+            Parent registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/StartWindow.fxml"));
+            Scene registrovanjeScene = new Scene(registrovanjeParent);
+            Stage window = (Stage)((Node)trenutniDogadjaj.getSource()).getScene().getWindow();
+            window.setScene(registrovanjeScene);
+            window.show();
+        }
+
+    }
 }

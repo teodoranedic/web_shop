@@ -1,55 +1,23 @@
 package Model;
 
+import java.io.IOException;
 import java.util.*;
 
 public abstract class Stanje {
-   public void entry() {
-      // TODO: implement
+   protected WebShop kontekst;
+   public Stanje(WebShop wb){
+      kontekst = wb;
    }
-   
-   public void exit() {
-      // TODO: implement
-   }
-   
-   public void ubacivanjeUKorpu() {
-      // TODO: implement
-   }
-   
-   public void odabraniFilter(String f) {
-      // TODO: implement
-   }
-   
-
-   public void klikNaProizvod() {
-      // TODO: implement
-   }
-   
-   public void nastavakKupovine() {
-      // TODO: implement
-   }
-   
-   public void klikniNaKorpu() {
-      // TODO: implement
-   }
-   
-   public void potrvrdaKupovine() {
-      // TODO: implement
-   }
-   
-   public void brisanjeProizvoda() {
-      // TODO: implement
-   }
-   
-   public void neodobrenaKupovina() {
-      // TODO: implement
-   }
-   
-   public void izvrsenoPlacanje() {
-      // TODO: implement
-   }
-   
-   public void odobrenaKupovina() {
-      // TODO: implement
-   }
-
+   public abstract void entry();
+   public abstract void exit();
+   public abstract void ubacivanjeUKorpu();
+   public abstract void odabraniFilter(String f);
+   public abstract void klikNaProizvod() throws IOException;
+   public abstract void nastavakKupovine();
+   public abstract void klikniNaKorpu();
+   public abstract void potrvrdaKupovine();
+   public abstract void brisanjeProizvoda();
+   public abstract void neodobrenaKupovina();
+   public abstract void izvrsenoPlacanje();
+   public abstract void odobrenaKupovina();
 }

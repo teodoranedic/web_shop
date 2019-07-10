@@ -3,6 +3,10 @@ import java.util.*;
 
 /** @pdOid 576da6ca-adf0-44c7-be36-505cb4628366 */
 public class ObradaZahteva extends Stanje {
+   public ObradaZahteva(WebShop wb) {
+      super(wb);
+   }
+
    /** @pdOid 814ae7d9-761b-42c2-a046-d1e5f47e1362 */
    public void entry() {
       // TODO: implement

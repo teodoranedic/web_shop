@@ -3,6 +3,10 @@ import java.util.*;
 
 /** @pdOid 64a7bd57-e0f6-4cb7-ba5d-42d1ba6613e4 */
 public class PregledKorpe extends Stanje {
+   public PregledKorpe(WebShop wb) {
+      super(wb);
+   }
+
    /** @pdOid 071a872c-951a-4760-b106-2fa0231eb757 */
    public void entry() {
       // TODO: implement

@@ -3,6 +3,10 @@ import java.util.*;
 
 /** @pdOid 93e98c3d-62e1-405b-a364-edb999cb5aab */
 public class Porucivanje extends Stanje {
+   public Porucivanje(WebShop wb) {
+      super(wb);
+   }
+
    /** @pdOid db047545-c83d-46f4-8fa7-575454e8e3d1 */
    public void entry() {
       // TODO: implement

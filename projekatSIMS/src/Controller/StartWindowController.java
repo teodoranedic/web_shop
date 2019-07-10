@@ -2,17 +2,23 @@ package Controller;
 
 import Comparators.CenaKomparator;
 import Comparators.NazivKomparator;
+import EventHandler.UpdateEventZaPregledProizvoda;
+import EventHandler.UpdateEventZaPregledSajta;
+import EventHandler.UpdateEventZaPregledSajtaPP;
+import EventHandler.UpdateListenerZaPregledSajtaPP;
+import EventHandler.UpdateListenerZaPregledSajta;
+import EventHandler.UpdateListenerZaPregledProizvoda;
 import Model.Boja;
 import Model.Kategorija;
 import Model.Proizvod;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.print.PageOrientation;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,8 +36,11 @@ import java.util.*;
 
 import static Controller.Main.*;
 
-public class StartWindowController implements Initializable {
+public class StartWindowController implements Initializable, UpdateListenerZaPregledSajta, UpdateListenerZaPregledProizvoda {
 
+
+    public ActionEvent trenutniDogadjaj;
+    public MouseEvent trenutniMouse;
     @FXML
     public static Button korpaa;
     public ScrollPane scrollPane = new ScrollPane();
@@ -61,10 +70,7 @@ public class StartWindowController implements Initializable {
         Parent logovanjeParent = FXMLLoader.load(getClass().getResource("/View/LogWindow.fxml"));
         komboBoja = ""; komboCena = ""; komboZene= ""; komboMuskarci = ""; komboSort = ""; trazi="";
         Scene logovanjeScene = new Scene(logovanjeParent);
-
-        //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
         window.setScene(logovanjeScene);
         window.show();
     }
@@ -74,10 +80,7 @@ public class StartWindowController implements Initializable {
         komboBoja = ""; komboCena = ""; komboZene= ""; komboMuskarci = ""; komboSort = ""; trazi="";
         Parent registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/SignUpWindow.fxml"));
         Scene registrovanjeScene = new Scene(registrovanjeParent);
-
-        //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
         window.setScene(registrovanjeScene);
         window.show();
     }
@@ -87,13 +90,9 @@ public class StartWindowController implements Initializable {
         if (search.getText()!= "") {
             trazi = search.getText();
         }
-
         Parent registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/StartWindow.fxml"));
         Scene registrovanjeScene = new Scene(registrovanjeParent);
-
-        //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
         window.setScene(registrovanjeScene);
         window.show();
     }
@@ -126,25 +125,15 @@ public class StartWindowController implements Initializable {
 
         Parent registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/StartWindow.fxml"));
         Scene registrovanjeScene = new Scene(registrovanjeParent);
-
-        //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
         window.setScene(registrovanjeScene);
         window.show();
     }
 
     @FXML
     public void ShopCartClicked(ActionEvent event) throws IOException ,IOException {
-        Parent korpaParent = FXMLLoader.load(getClass().getResource("/View/Cart.fxml"));
-        komboBoja = ""; komboCena = ""; komboZene= ""; komboMuskarci = ""; komboSort = ""; trazi="";
-        Scene korpaScene = new Scene(korpaParent);
-
-        //This line gets the Stage information
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
-        window.setScene(korpaScene);
-        window.show();
+        trenutniDogadjaj = event;
+        Main.webShop.klikniNaKorpu();
 
 
     }
@@ -196,6 +185,8 @@ public class StartWindowController implements Initializable {
             am.add(p);
         }
         hm.clear();
+
+        //TODO:ovo moze u model
     }
 
     public void ispisProizvoda(HashMap<String,Proizvod> hm, int reset){
@@ -236,26 +227,19 @@ public class StartWindowController implements Initializable {
                 ImageView view = new ImageView(image);
 
 
-                view.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    // na klik proizvoda setuje se trenutni proizvod i prelazi se na scenu za prikaz proizvoda
-                    Main.trenutniProizvod = hm.get(s);
+                view.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
-                    Parent proizvodParent = null;
-                    try {
-                        proizvodParent = FXMLLoader.load(getClass().getResource("/View/Product.fxml"));
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    @Override
+                    public void handle(MouseEvent event) {
+                        trenutniMouse =  event;
+                        Main.trenutniProizvod = hm.get(s);
+                        webShop.klikNaProizvod();
+                        event.consume();
+
                     }
-                    Scene proizvodScene = new Scene(proizvodParent);
-
-                    //This line gets the Stage information
-                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-                    window.setScene(proizvodScene);
-                    window.show();
-
-                    event.consume();
                 });
+
+
                 root.getChildren().add(view);
                 root.setSpacing(10);
                 root.setPadding(new Insets(10));
@@ -351,10 +335,13 @@ public class StartWindowController implements Initializable {
         }
         return ret;
     }
-
-
         @Override
     public void initialize(URL location, ResourceBundle resources) {
+            Main.webShop.addListener(this);
+            webShop.addListenerr(this);
+
+
+
         for (Kategorija k : kategorije) {
             maleList.add(k.getNaziv());
             femaleList.add(k.getNaziv());
@@ -362,7 +349,6 @@ public class StartWindowController implements Initializable {
         for (Boja b : Main.boje.values()) {
             colorList.add(b.getNaziv());
         }
-
 
         male.setItems(maleList);
         female.setItems(femaleList);
@@ -393,7 +379,45 @@ public class StartWindowController implements Initializable {
         }
 
     }
+
+    @Override
+    public void updatePerformed(UpdateEventZaPregledSajta e)  {
+
+        Parent korpaParent = null;
+        try {
+            korpaParent = FXMLLoader.load(getClass().getResource("/View/Cart.fxml"));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        komboBoja = ""; komboCena = ""; komboZene= ""; komboMuskarci = ""; komboSort = ""; trazi="";
+        Scene korpaScene = new Scene(korpaParent);
+        Stage window = (Stage)((Node)trenutniDogadjaj.getSource()).getScene().getWindow();
+        window.setScene(korpaScene);
+        window.show();
     }
+
+
+    @Override
+    public void updatePerformed(UpdateEventZaPregledProizvoda ee) {
+
+        Parent proizvodParent = null;
+        try {
+            proizvodParent = FXMLLoader.load(getClass().getResource("/View/Product.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene proizvodScene = new Scene(proizvodParent);
+
+        //This line gets the Stage information
+        Stage window = (Stage) ((Node) trenutniMouse.getSource()).getScene().getWindow();
+
+        window.setScene(proizvodScene);
+        window.show();
+
+    }
+
+
+}
 
 
 

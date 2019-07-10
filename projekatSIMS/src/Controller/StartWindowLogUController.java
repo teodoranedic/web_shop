@@ -2,12 +2,17 @@ package Controller;
 
 import Comparators.CenaKomparator;
 import Comparators.NazivKomparator;
+import EventHandler.UpdateEventZaPregledSajta;
+import EventHandler.UpdateListenerZaPregledSajta;
+import EventHandler.UpdateListenerZaPregledProizvoda;
+import EventHandler.UpdateEventZaPregledProizvoda;
 import Model.Boja;
 import Model.Kategorija;
 import Model.Proizvod;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -32,8 +37,9 @@ import java.util.ResourceBundle;
 
 import static Controller.Main.*;
 
-public class StartWindowLogUController implements Initializable {
-
+public class StartWindowLogUController implements Initializable, UpdateListenerZaPregledSajta, UpdateListenerZaPregledProizvoda {
+        public ActionEvent trenutniDogadjaj;
+        public MouseEvent trenutniMouse;
         @FXML
         public ScrollPane scrollPane = new ScrollPane();
         public VBox root = new VBox();
@@ -137,15 +143,9 @@ public class StartWindowLogUController implements Initializable {
 
         @FXML
         public void ShopCartClicked(ActionEvent event) throws IOException ,IOException {
-                Parent korpaParent = FXMLLoader.load(getClass().getResource("/View/Cart.fxml"));
-                komboBoja = ""; komboCena = ""; komboZene= ""; komboMuskarci = ""; komboSort = ""; trazi="";
-                Scene korpaScene = new Scene(korpaParent);
+                trenutniDogadjaj = event;
+                Main.webShop.klikniNaKorpu();
 
-                //This line gets the Stage information
-                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
-                window.setScene(korpaScene);
-                window.show();
 
 
         }
@@ -237,25 +237,16 @@ public class StartWindowLogUController implements Initializable {
                                 ImageView view = new ImageView(image);
 
 
-                                view.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                                        // na klik proizvoda setuje se trenutni proizvod i prelazi se na scenu za prikaz proizvoda
-                                        Main.trenutniProizvod = hm.get(s);
+                                view.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
-                                        Parent proizvodParent = null;
-                                        try {
-                                                proizvodParent = FXMLLoader.load(getClass().getResource("/View/Product.fxml"));
-                                        } catch (IOException e) {
-                                                e.printStackTrace();
+                                        @Override
+                                        public void handle(MouseEvent event) {
+                                                trenutniMouse =  event;
+                                                Main.trenutniProizvod = hm.get(s);
+                                                webShop.klikNaProizvod();
+                                                event.consume();
+
                                         }
-                                        Scene proizvodScene = new Scene(proizvodParent);
-
-                                        //This line gets the Stage information
-                                        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-                                        window.setScene(proizvodScene);
-                                        window.show();
-
-                                        event.consume();
                                 });
                                 root.getChildren().add(view);
                                 root.setSpacing(10);
@@ -356,6 +347,11 @@ public class StartWindowLogUController implements Initializable {
 
         @Override
         public void initialize(URL location, ResourceBundle resources) {
+
+
+                Main.webShop.addListener(this);
+                webShop.addListenerr(this);
+
                 for (Kategorija k : kategorije) {
                         maleList.add(k.getNaziv());
                         femaleList.add(k.getNaziv());
@@ -392,6 +388,43 @@ public class StartWindowLogUController implements Initializable {
                 root.setPadding(new Insets(10));
             }
         }
+
+        }
+
+        @Override
+        public void updatePerformed(UpdateEventZaPregledSajta e) {
+
+                Parent korpaParent = null;
+                try {
+                        korpaParent = FXMLLoader.load(getClass().getResource("/View/Cart.fxml"));
+                } catch (IOException ex) {
+                        ex.printStackTrace();
+                }
+                komboBoja = ""; komboCena = ""; komboZene= ""; komboMuskarci = ""; komboSort = ""; trazi="";
+                Scene korpaScene = new Scene(korpaParent);
+
+                //This line gets the Stage information
+                Stage window = (Stage)((Node)trenutniDogadjaj.getSource()).getScene().getWindow();
+
+                window.setScene(korpaScene);
+                window.show();
+        }
+
+        @Override
+        public void updatePerformed(UpdateEventZaPregledProizvoda ee) {
+                Parent proizvodParent = null;
+                try {
+                        proizvodParent = FXMLLoader.load(getClass().getResource("/View/Product.fxml"));
+                } catch (IOException e) {
+                        e.printStackTrace();
+                }
+                Scene proizvodScene = new Scene(proizvodParent);
+
+                //This line gets the Stage information
+                Stage window = (Stage) ((Node) trenutniMouse.getSource()).getScene().getWindow();
+
+                window.setScene(proizvodScene);
+                window.show();
 
         }
 }

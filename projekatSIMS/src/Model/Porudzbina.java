@@ -150,12 +150,7 @@ public class Porudzbina {
 
    public void osveziProzor() {
       UpdateEvent e = new UpdateEvent(this, promena);
-      //Slanje dogadjaja da se desila promena svima koji su se registrovali za pracenje promena:
-
       listeners.updatePerformed(e);
-
-
-      //U slucaju realnog kontrolera, ovde bi se direktno izdavale komande izlaznim uredjajima.
-   }
+     }
 
 }

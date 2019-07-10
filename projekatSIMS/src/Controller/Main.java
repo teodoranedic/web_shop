@@ -39,6 +39,7 @@ public class Main extends Application {
     public static String trenutnoIscrtani = "";
     public static Registrovani trenutniKorisnik = null;
     public static Korpa anonimnaKorpa = new Korpa();
+    public static WebShop webShop = new WebShop();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
