@@ -3,9 +3,11 @@ package Controller;
 import Comparators.CenaKomparator;
 import Comparators.NazivKomparator;
 import EventHandler.UpdateEventZaPregledSajta;
+import EventHandler.UpdateEventSajt;
 import EventHandler.UpdateListenerZaPregledSajta;
 import EventHandler.UpdateListenerZaPregledProizvoda;
 import EventHandler.UpdateEventZaPregledProizvoda;
+import EventHandler.UpdateListenerSajt;
 import Model.Boja;
 import Model.Kategorija;
 import Model.Proizvod;
@@ -37,7 +39,9 @@ import java.util.ResourceBundle;
 
 import static Controller.Main.*;
 
-public class StartWindowLogUController implements Initializable, UpdateListenerZaPregledSajta, UpdateListenerZaPregledProizvoda {
+public class StartWindowLogUController implements Initializable, UpdateListenerZaPregledSajta, UpdateListenerZaPregledProizvoda, UpdateListenerSajt {
+
+
         public ActionEvent trenutniDogadjaj;
         public MouseEvent trenutniMouse;
         @FXML
@@ -89,25 +93,18 @@ public class StartWindowLogUController implements Initializable, UpdateListenerZ
                 window.setScene(izmenaScene);
                 window.show();
         }
-
         @FXML
         void searchButtonPushed(ActionEvent event) throws IOException {
-                komboBoja = ""; komboCena = ""; komboZene= ""; komboMuskarci = ""; komboSort = "";
-                if (search.getText() != "") {
+                if (search.getText()!= "") {
                         trazi = search.getText();
                 }
-                Parent registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/StartWindowLoggedUser.fxml"));
-                Scene registrovanjeScene = new Scene(registrovanjeParent);
+                trenutniDogadjaj = event;
+                webShop.klikNaPretrazi();
 
-                //This line gets the Stage information
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-                window.setScene(registrovanjeScene);
-                window.show();
         }
 
-        @FXML
-        void comboChanged(ActionEvent event) throws IOException {
+        @FXML void comboChanged(ActionEvent event) throws IOException {
 
                 if (male.getValue()!= null) {
                         komboMuskarci = male.getValue();
@@ -123,7 +120,7 @@ public class StartWindowLogUController implements Initializable, UpdateListenerZ
                 if (price.getValue()!=null) {
                         komboCena = price.getValue();
                 }
-                if (sort.getValue()!= null) {
+                if (sort.getValue() != null) {
                         komboSort = sort.getValue();
                 }
 
@@ -131,22 +128,14 @@ public class StartWindowLogUController implements Initializable, UpdateListenerZ
         @FXML
         public void nadjiClicked(ActionEvent event) throws IOException {
 
-                Parent registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/StartWindow.fxml"));
-                Scene registrovanjeScene = new Scene(registrovanjeParent);
-
-                //This line gets the Stage information
-                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
-                window.setScene(registrovanjeScene);
-                window.show();
+                trenutniDogadjaj = event;
+                webShop.klikNaNadji();
         }
 
         @FXML
         public void ShopCartClicked(ActionEvent event) throws IOException ,IOException {
                 trenutniDogadjaj = event;
                 Main.webShop.klikniNaKorpu();
-
-
 
         }
 
@@ -179,24 +168,10 @@ public class StartWindowLogUController implements Initializable, UpdateListenerZ
                         root.getChildren().add(view);
                         root.setSpacing(10);
                         root.setPadding(new Insets(10));
-                        if (reset != 0) {
-                                komboCena = "";
-                                komboBoja = "";
-                                komboMuskarci = "";
-                                komboZene = "";
-                                trazi = "";
-                                komboSort = "";
-                        }
                 }
                 scrollPane.setContent(root);
                 scrollPane.setPannable(true);
-
-        }
-        public void prebaciUArray(ArrayList<Proizvod> am,HashMap<String, Proizvod> hm) {
-                for (Proizvod p:hm.values()) {
-                        am.add(p);
-                }
-                hm.clear();
+                webShop.listaZaSortiranje.clear(); //mora da bude prazna kad god se udje na sortiranje opet
         }
 
         public void ispisProizvoda(HashMap<String,Proizvod> hm, int reset){
@@ -207,31 +182,12 @@ public class StartWindowLogUController implements Initializable, UpdateListenerZ
                         root.setPadding(new Insets(10));
                 }
 
-                if (komboSort.equals("cena opadajuce")) {
-                        ArrayList<Proizvod> listaZaSortiranje = new ArrayList<>();
-                        prebaciUArray(listaZaSortiranje,hm);
-                        Collections.sort(listaZaSortiranje, new CenaKomparator("cena opadajuce"));
-                        ispisiSortirano(listaZaSortiranje,1);
+                webShop.proveriFiltere(hm);
+
+                if (!webShop.listaZaSortiranje.isEmpty()) {
+                        ispisiSortirano(webShop.listaZaSortiranje,1);
                 }
-                else if (komboSort.equals("cena rastuce")) {
-                        ArrayList<Proizvod> listaZaSortiranje = new ArrayList<>();
-                        prebaciUArray(listaZaSortiranje,hm);
-                        Collections.sort(listaZaSortiranje, new CenaKomparator("cena rastuce"));
-                        ispisiSortirano(listaZaSortiranje,1);
-                }
-                else if (komboSort.equals("naziv rastuce")) {
-                        ArrayList<Proizvod> listaZaSortiranje = new ArrayList<>();
-                        prebaciUArray(listaZaSortiranje,hm);
-                        Collections.sort(listaZaSortiranje, new NazivKomparator("naziv rastuce"));
-                        ispisiSortirano(listaZaSortiranje,1);
-                }
-                else if (komboSort.equals("naziv opadajuce")) {
-                        ArrayList<Proizvod> listaZaSortiranje = new ArrayList<>();
-                        prebaciUArray(listaZaSortiranje,hm);
-                        Collections.sort(listaZaSortiranje, new NazivKomparator("naziv opadajuce"));
-                        ispisiSortirano(listaZaSortiranje,1);
-                }
-                else {
+                else{
                         for (String s : hm.keySet()) {
                                 Image image = new Image(s);
                                 ImageView view = new ImageView(image);
@@ -241,116 +197,32 @@ public class StartWindowLogUController implements Initializable, UpdateListenerZ
 
                                         @Override
                                         public void handle(MouseEvent event) {
-                                                trenutniMouse =  event;
+                                                trenutniMouse = event;
                                                 Main.trenutniProizvod = hm.get(s);
                                                 webShop.klikNaProizvod();
                                                 event.consume();
 
                                         }
                                 });
+
+
                                 root.getChildren().add(view);
                                 root.setSpacing(10);
                                 root.setPadding(new Insets(10));
-                                if (reset != 0) {
-                                        komboCena = "";
-                                        komboBoja = "";
-                                        komboMuskarci = "";
-                                        komboZene = "";
-                                        trazi = "";
-                                        komboSort = "";
-                                }
                         }
                         scrollPane.setContent(root);
                         scrollPane.setPannable(true);
                 }
         };
-        HashMap<String, Proizvod> modifikovanaZene = new HashMap<String, Proizvod>();
-        HashMap<String, Proizvod> modifikovanaMuskarci = new HashMap<String, Proizvod>();
-        HashMap<String, Proizvod> modifikovanaNeutralno = new HashMap<String, Proizvod>();
 
-        public void izlistavanje() {
-                double min = 0.0;
-                double max = 0.0;
-                if (komboCena != "") {
-                        min = Double.parseDouble(komboCena.substring(0, komboCena.indexOf("-")));
-                        max = Double.parseDouble(komboCena.substring(komboCena.indexOf("-") + 1, komboCena.length()));
-                }
-                if (komboZene != "") {
-                        MuskoZensko(proizvodiZenski,komboZene, modifikovanaZene, min, max);
-                        ispisProizvoda(modifikovanaZene,1);
-                }
-                else if (komboMuskarci!="") {
-                        MuskoZensko(proizvodiMuski, komboMuskarci, modifikovanaMuskarci, min, max);
-                        ispisProizvoda(modifikovanaMuskarci,1);
-                }
-                else if (komboMuskarci.equals("") && (komboZene.equals(""))) {
-                        Neutralno(proizvodiMuski, modifikovanaNeutralno, min, max);
-                        Neutralno(proizvodiZenski, modifikovanaNeutralno, min, max);
-                        ispisProizvoda(modifikovanaNeutralno,1);
-                }
-
-        }
-        public void Neutralno (HashMap<String, Proizvod> hm, HashMap<String, Proizvod> modifikovana, double min, double max){
-                for (Proizvod p: hm.values()) {
-                        if (komboCena != "" && komboBoja != "") { //ako je odabrao i cenu i boju
-                                if (min <= p.getStavkaCenovnika() && p.getStavkaCenovnika() <= max) {
-                                        for (Boja b : p.getBoja()) {
-                                                if (komboBoja.equals(b.getNaziv())) {
-                                                        modifikovana.put(p.getSlika(), p);
-                                                }
-                                        }
-                                }
-                        } else if (komboBoja != "" && komboCena == "") { //ako je odabrao samo cenu
-                                for (Boja b : p.getBoja()) {
-                                        if (komboBoja.equals(b.getNaziv())) {
-                                                modifikovana.put(p.getSlika(), p);
-                                        }
-                                }
-                        } else if (komboCena != "" && komboBoja == "") { //akoje odabrao samo boju
-                                if (min <= p.getStavkaCenovnika() && p.getStavkaCenovnika() <= max) {
-                                        modifikovana.put(p.getSlika(), p);
-                                }
-                        }
-                        else if(komboBoja.equals("")&& komboCena.equals("")){
-                                modifikovana.put(p.getSlika(), p);
-                        }
-
-                }
-                //ispisProizvoda(modifikovana,1);
-        }
-        public HashMap<String, Proizvod> modBojaCena= new HashMap<String, Proizvod>();
-        public void MuskoZensko(HashMap<String, Proizvod> hm, String kombo, HashMap<String, Proizvod> modifikacija, double min, double max){
-                for (Proizvod p : hm.values()) {
-                        if (p.getKategorija().getNaziv().equals(kombo)) {
-                                modBojaCena.put(p.getSlika(), p);
-                        }
-                }
-                Neutralno(modBojaCena, modifikacija, min, max);
-        }
-        public int Pretraga(HashMap<String,Proizvod>hm) {
-                int ret = 0;
-                for (Proizvod p : hm.values()) {
-                        if (trazi.equals(p.getNaziv().toUpperCase()) || trazi.equals(p.getNaziv().toLowerCase()) || trazi.equals(p.getNaziv()) ) {
-                                ret = 1;
-                                Image image = new Image(p.getSlika());
-                                ImageView view = new ImageView(image);
-                                root.getChildren().clear();
-                                root.getChildren().add(view);
-                                root.setSpacing(10);
-                                root.setPadding(new Insets(10));
-                        }
-                        else {}
-                }
-                return ret;
-        }
 
 
         @Override
         public void initialize(URL location, ResourceBundle resources) {
-
-
                 Main.webShop.addListener(this);
                 webShop.addListenerr(this);
+                webShop.addListenerSajt(this);
+
 
                 for (Kategorija k : kategorije) {
                         maleList.add(k.getNaziv());
@@ -360,39 +232,48 @@ public class StartWindowLogUController implements Initializable, UpdateListenerZ
                         colorList.add(b.getNaziv());
                 }
 
-
                 male.setItems(maleList);
                 female.setItems(femaleList);
                 color.setItems(colorList);
                 sort.setItems(sortList);
                 price.setItems(priceList);
 
-                if (komboZene.equals("") && komboMuskarci.equals("") && komboBoja.equals("") && komboCena.equals("") && search.getText().equals("") && komboSort.equals("")) {
+
+                if (webShop.proveriUcitavanje()==1) {
                         ispisProizvoda(proizvodiMuski, 0);
                         ispisProizvoda(proizvodiZenski, 0);
                 }
 
 
-                if (komboZene!="" || komboMuskarci!="" || komboBoja!="" || komboCena!="" || komboSort!="") {
-                        izlistavanje();
+                else if (webShop.proveriUcitavanje()==2) {
+                        HashMap<String, Proizvod> zaIspisProizvoda = webShop.izlistavanje();
+                        ispisProizvoda(zaIspisProizvoda,1); //ovo mora da radi kontroler
+                        webShop.iscistiHesh();
+                        webShop.resetujFiltere();
+                }
+                else if (webShop.proveriUcitavanje() == 3) {
+                        ispisProizvoda(webShop.Pretraga(), 1);
                 }
 
-        if (!trazi.equals("")){
-            int uspesno = 0;
-            uspesno += Pretraga(proizvodiMuski);
-            uspesno += Pretraga(proizvodiZenski);
-            if (uspesno == 0) {
-                root.getChildren().clear();
-                root.getChildren().add(message);
-                root.setSpacing(10);
-                root.setPadding(new Insets(10));
-            }
-        }
 
         }
 
         @Override
-        public void updatePerformed(UpdateEventZaPregledSajta e) {
+        public void updatePerformed(UpdateEventSajt e)  {
+
+                Parent registrovanjeParent = null;
+                try {
+                        registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/StartWindowLoggedUser.fxml"));
+                } catch (IOException ex) {
+                        ex.printStackTrace();
+                }
+                Scene registrovanjeScene = new Scene(registrovanjeParent);
+                Stage window = (Stage)((Node)trenutniDogadjaj.getSource()).getScene().getWindow();
+                window.setScene(registrovanjeScene);
+                window.show();
+        }
+        @Override
+        public void updatePerformed(UpdateEventZaPregledSajta e)  {
 
                 Parent korpaParent = null;
                 try {
@@ -402,16 +283,15 @@ public class StartWindowLogUController implements Initializable, UpdateListenerZ
                 }
                 komboBoja = ""; komboCena = ""; komboZene= ""; komboMuskarci = ""; komboSort = ""; trazi="";
                 Scene korpaScene = new Scene(korpaParent);
-
-                //This line gets the Stage information
                 Stage window = (Stage)((Node)trenutniDogadjaj.getSource()).getScene().getWindow();
-
                 window.setScene(korpaScene);
                 window.show();
         }
 
+
         @Override
         public void updatePerformed(UpdateEventZaPregledProizvoda ee) {
+
                 Parent proizvodParent = null;
                 try {
                         proizvodParent = FXMLLoader.load(getClass().getResource("/View/Product.fxml"));
@@ -427,5 +307,7 @@ public class StartWindowLogUController implements Initializable, UpdateListenerZ
                 window.show();
 
         }
+
+
 }
 

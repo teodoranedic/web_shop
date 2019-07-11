@@ -70,7 +70,7 @@ public class StartWindowController implements Initializable, UpdateListenerZaPre
     @FXML
     public void logButtonPushed(ActionEvent event) throws IOException, IOException {
         Parent logovanjeParent = FXMLLoader.load(getClass().getResource("/View/LogWindow.fxml"));
-        komboBoja = ""; komboCena = ""; komboZene= ""; komboMuskarci = ""; komboSort = ""; trazi="";
+        //komboBoja = ""; komboCena = ""; komboZene= ""; komboMuskarci = ""; komboSort = ""; trazi="";
         Scene logovanjeScene = new Scene(logovanjeParent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(logovanjeScene);
@@ -79,7 +79,7 @@ public class StartWindowController implements Initializable, UpdateListenerZaPre
 
     @FXML
     void signUpButtonPushed(ActionEvent event) throws IOException {
-        komboBoja = ""; komboCena = ""; komboZene= ""; komboMuskarci = ""; komboSort = ""; trazi="";
+        //komboBoja = ""; komboCena = ""; komboZene= ""; komboMuskarci = ""; komboSort = ""; trazi="";
         Parent registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/SignUpWindow.fxml"));
         Scene registrovanjeScene = new Scene(registrovanjeParent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -88,7 +88,7 @@ public class StartWindowController implements Initializable, UpdateListenerZaPre
     }
     @FXML
     void searchButtonPushed(ActionEvent event) throws IOException {
-        komboBoja = ""; komboCena = ""; komboZene= ""; komboMuskarci = ""; komboSort = "";
+        //komboBoja = ""; komboCena = ""; komboZene= ""; komboMuskarci = ""; komboSort = "";
         if (search.getText()!= "") {
             trazi = search.getText();
         }
@@ -163,14 +163,14 @@ public class StartWindowController implements Initializable, UpdateListenerZaPre
             root.getChildren().add(view);
             root.setSpacing(10);
             root.setPadding(new Insets(10));
-            if (reset != 0) {
+          /*  if (reset != 0) {
                 komboCena = "";
                 komboBoja = "";
                 komboMuskarci = "";
                 komboZene = "";
                 trazi = "";
                 komboSort = "";
-            }
+            }*/
         }
         scrollPane.setContent(root);
         scrollPane.setPannable(true);
