@@ -13,6 +13,8 @@ public abstract class Stanje {
    public abstract void ubacivanjeUKorpu();
    public abstract void odabraniFilter(String f);
    public abstract void klikNaProizvod() throws IOException;
+   public abstract void klikNaNadji() throws IOException;
+   public abstract void klikNaPretrazi() throws IOException;
    public abstract void nastavakKupovine();
    public abstract void klikniNaKorpu();
    public abstract void potrvrdaKupovine();

@@ -1,8 +1,12 @@
 package Model;
+import Comparators.CenaKomparator;
+import Comparators.NazivKomparator;
 import EventHandler.*;
 
 import java.io.IOException;
 import java.util.*;
+
+import static Controller.Main.*;
 
 
 public class WebShop {
@@ -10,9 +14,11 @@ public class WebShop {
    private String naziv;
    private String link;
 
+   private UpdateListenerSajt updateListenerSAJT;
    private UpdateListenerZaPregledSajta updateListenerZaPregledSajta;
    private UpdateListenerZaPregledSajtaPP updateP;
    private UpdateListenerZaPregledProizvoda updateListenerZaPregledProizvoda;
+
 
    public ImaNaStanju[] association9;
    public Stanje tekuceStanje;
@@ -22,11 +28,15 @@ public class WebShop {
    public java.util.Collection<Cenovnik> cenovnik;
    public java.util.Collection<Kategorija> kategorija;
 
+
+   public ArrayList<Proizvod> listaZaSortiranje = new ArrayList<>();
    private boolean promena = false;
 
    public void addListener(UpdateListenerZaPregledSajta u){updateListenerZaPregledSajta=u;}
    public void addListenerr(UpdateListenerZaPregledProizvoda u){updateListenerZaPregledProizvoda=u;}
    public void addLP(UpdateListenerZaPregledSajtaPP p){updateP =p;}
+   public void addListenerSajt(UpdateListenerSajt s) {updateListenerSAJT = s;}
+
 
    public boolean isPromena() {
       return promena;
@@ -38,6 +48,30 @@ public class WebShop {
       tekuceStanje = new PregledSajta(this);
    }
 
+
+   public HashMap<String, Proizvod> Pretraga() {
+      HashMap<String, Proizvod> rezultati = new HashMap<String, Proizvod>();
+      for (Proizvod p : proizvodiMuski.values()) {
+         if (trazi.equals(p.getNaziv().toUpperCase()) || trazi.equals(p.getNaziv().toLowerCase()) || trazi.equals(p.getNaziv())) {
+            rezultati.put(p.getSlika(),p);
+         }
+      }
+      for (Proizvod p : proizvodiZenski.values()) {
+         if (trazi.equals(p.getNaziv().toUpperCase()) || trazi.equals(p.getNaziv().toLowerCase()) || trazi.equals(p.getNaziv())) {
+            rezultati.put(p.getSlika(),p);
+         }
+      }
+      return rezultati;
+   }
+
+   public void resetujFiltere() {
+      komboZene="";
+      komboMuskarci="";
+      komboBoja="";
+      komboCena="";
+      komboSort="";
+      trazi = "";
+   }
    public void promeniStanje(Stanje novoStanje) {
       tekuceStanje.exit();
       novoStanje.entry();
@@ -50,7 +84,26 @@ public class WebShop {
    public void odabraniFilter_f_() {
       // TODO: moze implement
    }
-   
+
+   public void klikNaNadji() {
+      try{
+         tekuceStanje.klikNaNadji();
+      }
+      catch (IOException e) {
+         e.printStackTrace();
+      }
+   }
+
+   public void klikNaPretrazi() {
+      try{
+         tekuceStanje.klikNaPretrazi();
+      }
+      catch (IOException e) {
+         e.printStackTrace();
+      }
+   }
+
+
    public void klikNaProizvod() {
       try {
          tekuceStanje.klikNaProizvod();
@@ -72,9 +125,131 @@ public class WebShop {
       UpdateEventZaPregledProizvoda e = new UpdateEventZaPregledProizvoda(this, promena);
       updateListenerZaPregledProizvoda.updatePerformed(e);
    }
+   public void osveziSajt() throws  IOException {
+      UpdateEventSajt ups = new UpdateEventSajt(this, promena);
+      updateListenerSAJT.updatePerformed(ups);
+   }
 
    public void nastavakKupovine() {
       tekuceStanje.nastavakKupovine();
+   }
+
+   public void prebaciUArray(ArrayList<Proizvod> am,HashMap<String, Proizvod> hm) {
+      for (Proizvod p:hm.values()) {
+         am.add(p);
+      }
+      hm.clear();
+
+   }
+
+   public void proveriFiltere(HashMap<String, Proizvod> hm) {
+      if (komboSort.equals("cena opadajuce")) {
+         prebaciUArray(listaZaSortiranje,hm);
+         Collections.sort(listaZaSortiranje, new CenaKomparator("cena opadajuce"));
+         //ispisiSortirano(listaZaSortiranje,1);
+      }
+      else if (komboSort.equals("cena rastuce")) {
+         prebaciUArray(listaZaSortiranje,hm);
+         Collections.sort(listaZaSortiranje, new CenaKomparator("cena rastuce"));
+         //ispisiSortirano(listaZaSortiranje,1);
+      }
+      else if (komboSort.equals("naziv rastuce")) {
+         prebaciUArray(listaZaSortiranje,hm);
+         Collections.sort(listaZaSortiranje, new NazivKomparator("naziv rastuce"));
+         //ispisiSortirano(listaZaSortiranje,1);
+      }
+      else if (komboSort.equals("naziv opadajuce")) {
+         prebaciUArray(listaZaSortiranje,hm);
+         Collections.sort(listaZaSortiranje, new NazivKomparator("naziv opadajuce"));
+         //ispisiSortirano(listaZaSortiranje,1);
+      }
+   }
+   HashMap<String, Proizvod> modifikovanaZene = new HashMap<String, Proizvod>();
+   HashMap<String, Proizvod> modifikovanaMuskarci = new HashMap<String, Proizvod>();
+   HashMap<String, Proizvod> modifikovanaNeutralno = new HashMap<String, Proizvod>();
+
+   public void iscistiHesh() {
+      modifikovanaNeutralno.clear();
+      modifikovanaMuskarci.clear();
+      modifikovanaMuskarci.clear();
+      listaZaSortiranje.clear();
+      modBojaCena.clear();
+   }
+
+   public HashMap<String, Proizvod> izlistavanje() {
+      double min = 0.0;
+      double max = 0.0;
+
+      if (komboCena != "") {
+         min = Double.parseDouble(komboCena.substring(0, komboCena.indexOf("-")));
+         max = Double.parseDouble(komboCena.substring(komboCena.indexOf("-") + 1, komboCena.length()));
+      }
+      if (komboZene != "") {
+         MuskoZensko(proizvodiZenski,komboZene, modifikovanaZene, min, max);
+         return modifikovanaZene;
+      }
+      else if (komboMuskarci!="") {
+         MuskoZensko(proizvodiMuski, komboMuskarci, modifikovanaMuskarci, min, max);
+         return modifikovanaMuskarci;
+      }
+      else if (komboMuskarci.equals("") && (komboZene.equals(""))) {
+         Neutralno(proizvodiMuski, modifikovanaNeutralno, min, max);
+         Neutralno(proizvodiZenski, modifikovanaNeutralno, min, max);
+         return modifikovanaNeutralno;
+      }
+      else {
+         return null;
+      }
+
+   }
+   public void Neutralno (HashMap<String, Proizvod> hm, HashMap<String, Proizvod> modifikovana, double min, double max){
+      for (Proizvod p: hm.values()) {
+         if (komboCena != "" && komboBoja != "") { //ako je odabrao i cenu i boju
+            if (min <= p.getStavkaCenovnika() && p.getStavkaCenovnika() <= max) {
+               for (Boja b : p.getBoja()) {
+                  if (komboBoja.equals(b.getNaziv())) {
+                     modifikovana.put(p.getSlika(), p);
+                  }
+               }
+            }
+         } else if (komboBoja != "" && komboCena == "") { //ako je odabrao samo cenu
+            for (Boja b : p.getBoja()) {
+               if (komboBoja.equals(b.getNaziv())) {
+                  modifikovana.put(p.getSlika(), p);
+               }
+            }
+         } else if (komboCena != "" && komboBoja == "") { //akoje odabrao samo boju
+            if (min <= p.getStavkaCenovnika() && p.getStavkaCenovnika() <= max) {
+               modifikovana.put(p.getSlika(), p);
+            }
+         }
+         else if(komboBoja.equals("")&& komboCena.equals("")){
+            modifikovana.put(p.getSlika(), p);
+         }
+
+      }
+   }
+   public HashMap<String, Proizvod> modBojaCena= new HashMap<String, Proizvod>();
+
+   public void MuskoZensko(HashMap<String, Proizvod> hm, String kombo, HashMap<String, Proizvod> modifikacija, double min, double max){
+      for (Proizvod p : hm.values()) {
+         if (p.getKategorija().getNaziv().equals(kombo)) {
+            modBojaCena.put(p.getSlika(), p);
+         }
+      }
+      Neutralno(modBojaCena, modifikacija, min, max);
+   }
+   public int proveriUcitavanje() {
+      if (komboZene.equals("") && komboMuskarci.equals("") && komboBoja.equals("") && komboCena.equals("") && trazi.equals("") && komboSort.equals("")) {
+         return 1;
+      }
+      else if (komboZene != "" || komboMuskarci != "" || komboBoja!="" || komboCena != "" || komboSort!= "" ){
+         return 2;
+      }
+      else if (!trazi.equals("")) {
+         return 3;
+      }
+      else {return 0;}
    }
    public void klikniNaKorpu() {
       tekuceStanje.klikniNaKorpu();

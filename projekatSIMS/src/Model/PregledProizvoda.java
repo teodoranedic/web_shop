@@ -1,6 +1,7 @@
 package Model;
 import Controller.Main;
 
+import java.io.IOException;
 import java.util.*;
 public class PregledProizvoda extends Stanje {
    public PregledProizvoda(WebShop wb) {
@@ -22,6 +23,17 @@ public class PregledProizvoda extends Stanje {
    public void klikNaProizvod() {
       // TODO: implement
    }
+
+   @Override
+   public void klikNaNadji() throws IOException {
+
+   }
+
+   @Override
+   public void klikNaPretrazi() throws IOException {
+
+   }
+
    public void nastavakKupovine() {
       kontekst.promeniStanje(new PregledSajta(kontekst));
       if(Main.trenutniKorisnik !=null){

@@ -3,17 +3,19 @@ package Model;
 import java.io.IOException;
 import java.util.*;
 
+import static Controller.Main.*;
+import static Controller.Main.komboSort;
+
 
 public class PregledSajta extends Stanje {
    public PregledSajta(WebShop wb) {
       super(wb);
    }
+
    public void entry() {
-      // TODO: implement
    }
 
    public void exit() {
-      // TODO: implement
    }
    public void ubacivanjeUKorpu() {
       // TODO: implement
@@ -26,7 +28,26 @@ public class PregledSajta extends Stanje {
       kontekst.promeniStanje(new PregledProizvoda(kontekst));
       kontekst.osveziProizvod();
    }
-   
+
+   @Override
+   public void klikNaNadji() throws IOException {
+      kontekst.promeniStanje(new PregledSajta(kontekst));
+      kontekst.setPromena(true);
+      kontekst.osveziSajt();
+   }
+   @Override
+   public void klikNaPretrazi() throws IOException {
+      if (!trazi.equals("")) {
+         kontekst.promeniStanje(new PregledSajta(kontekst));
+         kontekst.setPromena(true);
+         kontekst.osveziSajt();
+      }
+      else {
+         kontekst.setPromena(false); //treba da ispise da nema rezultata pretrage
+         kontekst.osveziSajt();
+      }
+   }
+
    public void nastavakKupovine() {
 
    }

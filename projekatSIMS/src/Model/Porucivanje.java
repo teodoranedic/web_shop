@@ -1,4 +1,5 @@
 package Model;
+import java.io.IOException;
 import java.util.*;
 
 /** @pdOid 93e98c3d-62e1-405b-a364-edb999cb5aab */
@@ -32,7 +33,17 @@ public class Porucivanje extends Stanje {
    public void klikNaProizvod() {
       // TODO: implement
    }
-   
+
+   @Override
+   public void klikNaNadji() throws IOException {
+
+   }
+
+   @Override
+   public void klikNaPretrazi() throws IOException {
+
+   }
+
    /** @pdOid c8cf500c-b969-4f0f-9405-e466497755e6 */
    public void nastavakKupovine() {
       // TODO: implement
