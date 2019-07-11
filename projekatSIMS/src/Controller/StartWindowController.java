@@ -79,7 +79,6 @@ public class StartWindowController implements Initializable, UpdateListenerZaPre
 
     @FXML
     void signUpButtonPushed(ActionEvent event) throws IOException {
-        //komboBoja = ""; komboCena = ""; komboZene= ""; komboMuskarci = ""; komboSort = ""; trazi="";
         Parent registrovanjeParent = FXMLLoader.load(getClass().getResource("/View/SignUpWindow.fxml"));
         Scene registrovanjeScene = new Scene(registrovanjeParent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -121,7 +120,6 @@ public class StartWindowController implements Initializable, UpdateListenerZaPre
     }
     @FXML
     public void nadjiClicked(ActionEvent event) throws IOException {
-
         trenutniDogadjaj = event;
         webShop.klikNaNadji();
     }
@@ -140,37 +138,21 @@ public class StartWindowController implements Initializable, UpdateListenerZaPre
             ImageView view = new ImageView(image);
 
 
-            view.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                // na klik proizvoda setuje se trenutni proizvod i prelazi se na scenu za prikaz proizvoda
-                Main.trenutniProizvod = p;
+            view.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
-                Parent proizvodParent = null;
-                try {
-                    proizvodParent = FXMLLoader.load(getClass().getResource("/View/Product.fxml"));
-                } catch (IOException e) {
-                    e.printStackTrace();
+                @Override
+                public void handle(MouseEvent event) {
+                    trenutniMouse = event;
+                    Main.trenutniProizvod = p;
+                    webShop.klikNaProizvod();
+                    event.consume();
+
                 }
-                Scene proizvodScene = new Scene(proizvodParent);
-
-                //This line gets the Stage information
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-                window.setScene(proizvodScene);
-                window.show();
-
-                event.consume();
             });
             root.getChildren().add(view);
             root.setSpacing(10);
             root.setPadding(new Insets(10));
-          /*  if (reset != 0) {
-                komboCena = "";
-                komboBoja = "";
-                komboMuskarci = "";
-                komboZene = "";
-                trazi = "";
-                komboSort = "";
-            }*/
+
         }
         scrollPane.setContent(root);
         scrollPane.setPannable(true);
@@ -212,14 +194,6 @@ public class StartWindowController implements Initializable, UpdateListenerZaPre
                 root.getChildren().add(view);
                 root.setSpacing(10);
                 root.setPadding(new Insets(10));
-                if (reset != 0) {
-                    komboCena = "";
-                    komboBoja = "";
-                    komboMuskarci = "";
-                    komboZene = "";
-                    trazi = "";
-                    komboSort = "";
-                }
             }
             scrollPane.setContent(root);
             scrollPane.setPannable(true);
@@ -259,7 +233,6 @@ public class StartWindowController implements Initializable, UpdateListenerZaPre
         else if (webShop.proveriUcitavanje()==2) {
             HashMap<String, Proizvod> zaIspisProizvoda = webShop.izlistavanje();
             ispisProizvoda(zaIspisProizvoda,1); //ovo mora da radi kontroler
-            webShop.iscistiHesh();
             webShop.resetujFiltere();
         }
         else if (webShop.proveriUcitavanje() == 3) {
@@ -313,7 +286,6 @@ public class StartWindowController implements Initializable, UpdateListenerZaPre
 
         //This line gets the Stage information
         Stage window = (Stage) ((Node) trenutniMouse.getSource()).getScene().getWindow();
-
         window.setScene(proizvodScene);
         window.show();
 

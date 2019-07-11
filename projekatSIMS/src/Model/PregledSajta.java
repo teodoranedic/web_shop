@@ -13,6 +13,7 @@ public class PregledSajta extends Stanje {
    }
 
    public void entry() {
+      webShop.iscistiHesh();
    }
 
    public void exit() {

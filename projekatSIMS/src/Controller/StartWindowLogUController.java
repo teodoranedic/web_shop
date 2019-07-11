@@ -145,29 +145,21 @@ public class StartWindowLogUController implements Initializable, UpdateListenerZ
                         ImageView view = new ImageView(image);
 
 
-                        view.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                                // na klik proizvoda setuje se trenutni proizvod i prelazi se na scenu za prikaz proizvoda
-                                Main.trenutniProizvod = p;
+                        view.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
-                                Parent proizvodParent = null;
-                                try {
-                                        proizvodParent = FXMLLoader.load(getClass().getResource("/View/Product.fxml"));
-                                } catch (IOException e) {
-                                        e.printStackTrace();
+                                @Override
+                                public void handle(MouseEvent event) {
+                                        trenutniMouse = event;
+                                        Main.trenutniProizvod = p;
+                                        webShop.klikNaProizvod();
+                                        event.consume();
+
                                 }
-                                Scene proizvodScene = new Scene(proizvodParent);
-
-                                //This line gets the Stage information
-                                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-                                window.setScene(proizvodScene);
-                                window.show();
-
-                                event.consume();
                         });
                         root.getChildren().add(view);
                         root.setSpacing(10);
                         root.setPadding(new Insets(10));
+
                 }
                 scrollPane.setContent(root);
                 scrollPane.setPannable(true);
@@ -181,9 +173,7 @@ public class StartWindowLogUController implements Initializable, UpdateListenerZ
                         root.setSpacing(10);
                         root.setPadding(new Insets(10));
                 }
-
                 webShop.proveriFiltere(hm);
-
                 if (!webShop.listaZaSortiranje.isEmpty()) {
                         ispisiSortirano(webShop.listaZaSortiranje,1);
                 }
@@ -205,7 +195,6 @@ public class StartWindowLogUController implements Initializable, UpdateListenerZ
                                         }
                                 });
 
-
                                 root.getChildren().add(view);
                                 root.setSpacing(10);
                                 root.setPadding(new Insets(10));
@@ -214,7 +203,6 @@ public class StartWindowLogUController implements Initializable, UpdateListenerZ
                         scrollPane.setPannable(true);
                 }
         };
-
 
 
         @Override
@@ -248,7 +236,6 @@ public class StartWindowLogUController implements Initializable, UpdateListenerZ
                 else if (webShop.proveriUcitavanje()==2) {
                         HashMap<String, Proizvod> zaIspisProizvoda = webShop.izlistavanje();
                         ispisProizvoda(zaIspisProizvoda,1); //ovo mora da radi kontroler
-                        webShop.iscistiHesh();
                         webShop.resetujFiltere();
                 }
                 else if (webShop.proveriUcitavanje() == 3) {

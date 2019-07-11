@@ -146,22 +146,18 @@ public class WebShop {
       if (komboSort.equals("cena opadajuce")) {
          prebaciUArray(listaZaSortiranje,hm);
          Collections.sort(listaZaSortiranje, new CenaKomparator("cena opadajuce"));
-         //ispisiSortirano(listaZaSortiranje,1);
       }
       else if (komboSort.equals("cena rastuce")) {
          prebaciUArray(listaZaSortiranje,hm);
          Collections.sort(listaZaSortiranje, new CenaKomparator("cena rastuce"));
-         //ispisiSortirano(listaZaSortiranje,1);
       }
       else if (komboSort.equals("naziv rastuce")) {
          prebaciUArray(listaZaSortiranje,hm);
          Collections.sort(listaZaSortiranje, new NazivKomparator("naziv rastuce"));
-         //ispisiSortirano(listaZaSortiranje,1);
       }
       else if (komboSort.equals("naziv opadajuce")) {
          prebaciUArray(listaZaSortiranje,hm);
          Collections.sort(listaZaSortiranje, new NazivKomparator("naziv opadajuce"));
-         //ispisiSortirano(listaZaSortiranje,1);
       }
    }
    HashMap<String, Proizvod> modifikovanaZene = new HashMap<String, Proizvod>();
@@ -171,7 +167,7 @@ public class WebShop {
    public void iscistiHesh() {
       modifikovanaNeutralno.clear();
       modifikovanaMuskarci.clear();
-      modifikovanaMuskarci.clear();
+      modifikovanaZene.clear();
       listaZaSortiranje.clear();
       modBojaCena.clear();
    }

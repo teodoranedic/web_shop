@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/StartWindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/StartWindowController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/StartWindowLogUController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/StartWindowLogUController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/PregledSajta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/PregledSajta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/WebShop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/WebShop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tamara/production/projekatSIMS/Controller/StartWindowController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../tamara/production/projekatSIMS/Controller/StartWindowController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tamara/production/projekatSIMS/Controller/StartWindowController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../tamara/production/projekatSIMS/Controller/StartWindowController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tamara/production/projekatSIMS/Model/PregledSajta.class" beforeDir="false" afterPath="$PROJECT_DIR$/../tamara/production/projekatSIMS/Model/PregledSajta.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tamara/production/projekatSIMS/Model/WebShop.class" beforeDir="false" afterPath="$PROJECT_DIR$/../tamara/production/projekatSIMS/Model/WebShop.class" afterDir="false" />
+    </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -63,8 +73,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Controller/StartWindowController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="44" selection-start-line="44" selection-end-line="44" />
+            <state relative-caret-position="17">
+              <caret line="122" column="5" lean-forward="true" selection-start-line="122" selection-start-column="5" selection-end-line="122" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -72,22 +82,51 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Model/WebShop.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/EventHandler/UpdateListenerZaPregledProizvoda.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="611">
-              <caret line="149" column="7" lean-forward="true" selection-start-line="149" selection-start-column="7" selection-end-line="149" selection-end-column="7" />
+            <state relative-caret-position="85">
+              <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/StartWindowLogUController.java">
+        <entry file="file://$PROJECT_DIR$/src/Model/WebShop.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="502">
-              <caret line="218" selection-start-line="218" selection-end-line="218" />
+            <state relative-caret-position="190">
+              <caret line="177" lean-forward="true" selection-start-line="177" selection-end-line="177" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#3736#3737#0" expanded="true" />
+                <element signature="e#3780#3781#0" expanded="true" />
+                <element signature="e#8468#8469#0" expanded="true" />
+                <element signature="e#8509#8510#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Controller/StartWindowLogUController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="196">
+              <caret line="206" selection-start-line="206" selection-end-line="206" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Model/PregledSajta.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="14" column="24" lean-forward="true" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#301#302#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -121,6 +160,8 @@
       <find>addLis</find>
       <find>Pret</find>
       <find>rese</find>
+      <find>proveri</find>
+      <find>isci</find>
     </findStrings>
   </component>
   <component name="FindManager">
@@ -181,9 +222,9 @@
         <option value="$PROJECT_DIR$/src/Model/PregledProizvoda.java" />
         <option value="$PROJECT_DIR$/src/EventHandler/UpdateEventSajtPretraga.java" />
         <option value="$PROJECT_DIR$/src/EventHandler/UpdateListenerSajtPretraga.java" />
-        <option value="$PROJECT_DIR$/src/Model/PregledSajta.java" />
-        <option value="$PROJECT_DIR$/src/Model/WebShop.java" />
         <option value="$PROJECT_DIR$/src/Controller/StartWindowController.java" />
+        <option value="$PROJECT_DIR$/src/Model/WebShop.java" />
+        <option value="$PROJECT_DIR$/src/Model/PregledSajta.java" />
         <option value="$PROJECT_DIR$/src/Controller/StartWindowLogUController.java" />
       </list>
     </option>
@@ -195,7 +236,7 @@
     </treeState>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-10" />
     <option name="y" value="-10" />
     <option name="width" value="1384" />
@@ -212,7 +253,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -228,14 +268,14 @@
             <path>
               <item name="projekatSIMS" type="b2602c69:ProjectViewProjectNode" />
               <item name="projekatSIMS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Model" type="462c0819:PsiDirectoryNode" />
+              <item name="Test" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -414,9 +454,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.2080537" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.20801815" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" />
       <window_info id="Designer" order="3" />
@@ -495,11 +535,19 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Model/WebShop.java</url>
-          <line>353</line>
+          <line>349</line>
           <properties class="Model.WebShop">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/Controller/StartWindowController.java</url>
+          <line>276</line>
+          <properties class="Controller.StartWindowController" method="updatePerformed">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -562,13 +610,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/EventHandler/UpdateListenerZaPregledProizvoda.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -663,7 +704,6 @@
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/javafx-src.zip!/javafx/scene/Scene.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/javafx-src.zip!/javafx/collections/FXCollections.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/javafx-src.zip!/javafx/collections/MapChangeListener.java" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/javafx-src.zip!/javafx/fxml/FXMLLoader.java" />
     <entry file="file://$PROJECT_DIR$/src/Model/Stanje.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -802,16 +842,6 @@
     <entry file="file://$PROJECT_DIR$/src/EventHandler/UpdateListenerSajtPretraga.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/javafx-src.zip!/com/sun/javafx/tk/quantum/GlassViewEventHandler.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/javafx-src.zip!/com/sun/glass/ui/View.java" />
-    <entry file="file://$PROJECT_DIR$/src/Model/PregledSajta.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="28" column="15" selection-start-line="28" selection-start-column="15" selection-end-line="28" selection-end-column="15" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Model/PregledProizvoda.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="731">
@@ -822,10 +852,49 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/EventHandler/UpdateListenerZaPregledProizvoda.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/javafx-src.zip!/javafx/fxml/FXMLLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="3096" selection-start-line="3096" selection-end-line="3096" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/WebShop.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="177" lean-forward="true" selection-start-line="177" selection-end-line="177" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3736#3737#0" expanded="true" />
+            <element signature="e#3780#3781#0" expanded="true" />
+            <element signature="e#8468#8469#0" expanded="true" />
+            <element signature="e#8509#8510#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/PregledSajta.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="14" column="24" lean-forward="true" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#301#302#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/StartWindowController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="44" selection-start-line="44" selection-end-line="44" />
+        <state relative-caret-position="17">
+          <caret line="122" column="5" lean-forward="true" selection-start-line="122" selection-start-column="5" selection-end-line="122" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -834,18 +903,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/StartWindowLogUController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="502">
-          <caret line="218" selection-start-line="218" selection-end-line="218" />
+        <state relative-caret-position="196">
+          <caret line="206" selection-start-line="206" selection-end-line="206" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/WebShop.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="611">
-          <caret line="149" column="7" lean-forward="true" selection-start-line="149" selection-start-column="7" selection-end-line="149" selection-end-column="7" />
         </state>
       </provider>
     </entry>
