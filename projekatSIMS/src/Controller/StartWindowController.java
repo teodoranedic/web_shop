@@ -136,6 +136,8 @@ public class StartWindowController implements Initializable, UpdateListenerZaPre
         for (Proizvod p : am) {
             Image image = new Image(p.getSlika());
             ImageView view = new ImageView(image);
+            view.setFitHeight(500);
+            view.setFitWidth(400);
 
 
             view.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -176,6 +178,8 @@ public class StartWindowController implements Initializable, UpdateListenerZaPre
             for (String s : hm.keySet()) {
                 Image image = new Image(s);
                 ImageView view = new ImageView(image);
+                view.setFitHeight(500);
+                view.setFitWidth(400);
 
 
                 view.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {

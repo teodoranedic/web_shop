@@ -17,6 +17,8 @@ public class Porudzbina {
    private HashMap<Proizvod, Integer> proizvodi = new HashMap<Proizvod, Integer>();
    private boolean promena = false;
 
+   public Porudzbina(){}
+
    public boolean isPromena() {
       return promena;
    }

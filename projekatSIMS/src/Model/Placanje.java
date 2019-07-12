@@ -37,12 +37,15 @@ public class Placanje extends StanjePorudzbine {
    }
    
    public void exit() {
+      /*
       if (Main.trenutniKorisnik != null) {
          Main.trenutniKorisnik.getKorpa().getPorudzbina().isprazniKorpu();
       }
       else {
          Main.anonimnaKorpa.getPorudzbina().isprazniKorpu();
       }
+
+       */
    }
 
 }

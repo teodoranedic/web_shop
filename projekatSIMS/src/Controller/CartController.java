@@ -92,31 +92,7 @@ public class CartController implements Initializable, UpdateListener {
         }else{
             Main.anonimnaKorpa.getPorudzbina().OdabranoPlacanje();
         }
-            /*
-            if (Main.trenutniKorisnik.getKorpa().getProizvodi().size() != 0)
-            {
-                Parent porudzbinaParent = FXMLLoader.load(getClass().getResource("/View/Order.fxml"));
-                Scene porudzbinaScene = new Scene(porudzbinaParent);
-                //This line gets the Stage information
-                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-                window.setScene(porudzbinaScene);
-                window.show();
-            }
-        }
-        else
-        {
-            if (Main.anonimnaKorpa.getProizvodi().size() != 0)
-            {
-                Parent porudzbinaParent = FXMLLoader.load(getClass().getResource("/View/Order.fxml"));
-                Scene porudzbinaScene = new Scene(porudzbinaParent);
-                //This line gets the Stage information
-                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-                window.setScene(porudzbinaScene);
-                window.show();
-            }
-        }
-        */
-        //ukoliko nema proizvoda dugme nece reagovati
+
     }
 
     @FXML

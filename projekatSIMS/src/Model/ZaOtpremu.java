@@ -28,7 +28,12 @@ public class ZaOtpremu extends StanjePorudzbine {
 
 
    public void entry() {
-      // TODO: implement
+      if (Main.trenutniKorisnik != null) {
+         Main.trenutniKorisnik.getKorpa().getPorudzbina().isprazniKorpu();
+      }
+      else {
+         Main.anonimnaKorpa.getPorudzbina().isprazniKorpu();
+      }
    }
    
 

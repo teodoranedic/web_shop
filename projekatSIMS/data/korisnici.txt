@@ -1,3 +1,4 @@
 tam|tam|Tamara|Glisic|Pere Perica 2 Novi Sad|tamara@gmail.com|06352647|2654646465|/productsMale/manShirt.jpg#3;/productsFemale/versaceBag.jpg#1;/productsMale/manShirt.jpg#1;/productsFemale/ZaraSkirt.jpg#3;/productsFemale/Zarajumper.jpg#1
 kime|lozinka|ime|prezime|adresa|mejl|brojTelefona|brojKartice|
 pops|pops|Milica|Poparic|Jana Mara 25|milica@gmail.com|65985656|26589443|
+tea|tea|Teodora|Nedic|Jana Mara 26|tea@gmail.com|065974512|456841231685|
